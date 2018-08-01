@@ -20,14 +20,6 @@
         </div>
       </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand">西大成绩查询 - m西北大学网页版（非官方）</a>
-        </div>
-      </div>
-    </nav>
-
     <div class="container harbor-container" id="app">
       <div class="harbor-body">
         <div class="alert alert-warning">
@@ -122,6 +114,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '../assets/busuanzi.pure.mini'

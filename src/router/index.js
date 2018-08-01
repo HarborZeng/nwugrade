@@ -1,15 +1,27 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import grade from '@/components/grade'
+import Grade from '@/components/grade'
+import Error from '@/components/error'
+import Header from '@/components/header'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
       name: 'grade',
-      component: grade
+      component: Grade
+    },
+    {
+      path: '/header',
+      name: 'header',
+      component: Header
+    },
+    {
+      path: '*',
+      component: Error
     }
   ]
 })
