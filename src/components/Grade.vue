@@ -10,13 +10,13 @@
         <tr>
           <td v-if="grades.length === 0" colspan="2"><span>无</span></td>
         </tr>
-        <tr :key="grade.kcmc" v-for="grade in grades">
-          <td><span v-html="grade.kcmc"></span></td>
-          <td v-if="grade.cj < 60" class="badge badge-pill badge-danger"><span v-html="grade.cj"></span></td>
-          <td v-else-if="grade.cj >= 60 && grade.cj < 70" class="badge badge-pill badge-warning"><span
-            v-html="grade.cj"></span></td>
-          <td v-else-if="grade.cj >= 85" class="badge badge-pill badge-success"><span v-html="grade.cj"></span></td>
-          <td v-else><span v-html="grade.cj"></span></td>
+        <tr :key="Grade.kcmc" v-for="grade in grades">
+          <td><span v-html="Grade.kcmc"></span></td>
+          <td v-if="Grade.cj < 60" class="badge badge-pill badge-danger"><span v-html="Grade.cj"></span></td>
+          <td v-else-if="Grade.cj >= 60 && Grade.cj < 70" class="badge badge-pill badge-warning"><span
+            v-html="Grade.cj"></span></td>
+          <td v-else-if="Grade.cj >= 85" class="badge badge-pill badge-success"><span v-html="Grade.cj"></span></td>
+          <td v-else><span v-html="Grade.cj"></span></td>
         </tr>
       </table>
     </div>
@@ -35,7 +35,7 @@
   import axios from 'axios'
 
   export default {
-    name: 'grade',
+    name: 'Grade',
     data() {
       return {
         // 初始化app里面的几个变量的值

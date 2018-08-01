@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Grade from '@/components/grade'
+import GradeSPA from '@/components/Main'
 import Error from '@/components/error'
 
 Vue.use(Router)
@@ -10,8 +10,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'grade',
-      component: Grade
+      name: 'gradeSPA',
+      component: GradeSPA
     },
     {
       path: '*',
