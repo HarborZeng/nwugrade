@@ -24,14 +24,8 @@
 </template>
 
 <script>
-  /* eslint-disable */
   import 'bootstrap/dist/css/bootstrap.css'
   import 'bootstrap-vue/dist/bootstrap-vue.css'
-  import '../assets/busuanzi.pure.mini'
-  import '../assets/md5.min'
-  import '../assets/jquery_3.2.1_jquery.slim.min'
-  import '../assets/bootstrap.min'
-  import '../assets/popper.js_1.12.9_umd_popper.min'
   import axios from 'axios'
 
   export default {
@@ -176,27 +170,6 @@
     margin: 0 auto 20px auto;
   }
 
-  .copyright {
-    margin-top: 45px;
-    background: #ffffff;
-    font-size: 13px;
-    text-align: center;
-    color: #555555;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-top: dashed seashell 3px;
-    position: relative;
-    width: 100%;
-    bottom: 0;
-  }
-
-  .copyright span {
-    margin: 0 .5em;
-  }
-
-  .copyright a {
-    color: #555555;
-  }
 
   h1 a {
     color: #3c3c3c;

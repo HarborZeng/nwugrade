@@ -1,30 +1,49 @@
 <template>
-  <!-- Modal -->
-  <div class="modal" id="errMsgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="myModalLabel">啊哦~</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <span v-html="errmsg"></span>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">我知道了</button>
-          <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-        </div>
+  <div>
+    <b-button @click="showModal">
+      Open Modal
+    </b-button>
+    <b-modal ref="msgModal" hide-footer :title="msgTitle">
+      <div class="d-block text-center">
+        <h3 v-html="msg"></h3>
       </div>
-    </div>
+      <b-btn class="mt-3" variant="outline-danger" block @click="hideModal">我知道了</b-btn>
+    </b-modal>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'Modal'
-}
+  import bModal from 'bootstrap-vue/es/components/modal/modal'
+  import bModalDirective from 'bootstrap-vue/es/directives/modal/modal'
+  import bus from '../bus/bus'
+  export default {
+    name: 'Modal',
+    data() {
+      return {
+        msgTitle: this.$store.state.dialog.msgTitle,
+        msg: this.$store.state.dialog.msg
+      }
+    },
+    comments: {
+      'b-modal': bModal
+    },
+    directives: {
+      'b-modal': bModalDirective
+    },
+    methods: {
+      showModal () {
+        this.$refs.msgModal.show()
+      },
+      hideModal () {
+        this.$refs.msgModal.hide()
+      }
+    },
+    created() {
+      bus.$on("showDialog", () => {
+        this.showModal()
+      })
+    }
+  }
 </script>
 
 <style scoped>

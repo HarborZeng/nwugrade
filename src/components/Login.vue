@@ -19,9 +19,39 @@
 </template>
 
 <script>
-export default {
-  name: 'Login'
-}
+  import bus from '../bus/bus'
+
+  export default {
+    name: 'Login',
+    data() {
+      return {
+        studentNumber: '',
+        password: '',
+        checked: false
+      }
+    },
+    methods: {
+// 点击事件会调用此方法
+      login() {
+        // 判断学号长度
+        if (this.studentNumber.length !== 10) {
+          this.$store.commit('changeMsg', '学号长度有误')
+          bus.$emit("showDialog")
+          return
+        }
+        // 如果密码未填，自动填充和学号一样的密码
+        if (this.password.trim() === '') {
+          this.password = this.studentNumber
+        }
+        // 必须同意条款才能继续
+        if (!this.checked) {
+          this.errmsg = '必须同意条款才能继续'
+          $('#errMsgModal').modal('show')
+          return
+        }
+      }
+    }
+  }
 </script>
 
 <style scoped>
