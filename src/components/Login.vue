@@ -1,21 +1,43 @@
 <template>
-  <form name="loginForm" class="col-md-6">
-    <div class="form-group card harbor-padding">
-      <label for="student-number">学号：</label>
-      <input id="student-number" title="学号" placeholder="10位纯数字"
-             maxlength="10" v-model="studentNumber" class="form-control">
-      <label for="password">密码：</label>
-      <input type="password" id="password" title="密码"
-             placeholder="密码和学号一样的话，留空即可" v-model="password" class="form-control">
-    </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" name="agreement" v-model="checked"> 同意软件使用条款
-        <a href="agreement.html" target="_blank">免责条款</a>
-      </label>
-    </div>
-    <button type="button" class="btn btn-primary btn-lg" @click="login()">查询</button>
-  </form>
+  <b-form class="col-md-6">
+
+    <b-form-group
+      label="学号："
+      label-for="student-number"
+      description="10位或11位纯数字">
+      <b-form-input
+        id="student-number"
+        title="学号"
+        required
+        maxlength="11"
+        minlength="10"
+        v-model="studentNumber">
+      </b-form-input>
+    </b-form-group>
+
+    <b-form-group
+      label="密码："
+      label-for="password"
+      description="密码和学号一样的话，留空即可">
+      <b-form-input
+        type="password"
+        id="password"
+        title="密码"
+        required
+        v-model="password">
+      </b-form-input>
+    </b-form-group>
+
+    <b-form-checkbox v-model="checked"
+                     name="agreement"
+                     value=true
+                     unchecked-value=false
+                     required>
+      同意软件使用条款
+      <a href="agreement.html" target="_blank">免责条款</a>
+    </b-form-checkbox>
+    <b-button type="button" variant="primary btn-lg" @click="login()">查询</b-button>
+  </b-form>
 </template>
 
 <script>
@@ -34,9 +56,12 @@
 // 点击事件会调用此方法
       login() {
         // 判断学号长度
-        if (this.studentNumber.length !== 10) {
-          this.$store.commit('changeMsg', '学号长度有误')
-          bus.$emit("showDialog")
+        if (this.studentNumber.length !== 9 && this.studentNumber.length !== 10) {
+          if (this.studentNumber.length === 0) {
+            bus.$emit("showDialog", "学号必填", "emmm...")
+            return
+          }
+          bus.$emit("showDialog", "学号长度有误", "emmm...")
           return
         }
         // 如果密码未填，自动填充和学号一样的密码
@@ -45,10 +70,14 @@
         }
         // 必须同意条款才能继续
         if (!this.checked) {
-          this.errmsg = '必须同意条款才能继续'
-          $('#errMsgModal').modal('show')
-          return
+          bus.$emit("showDialog", "必须同意条款才能继续", "emmm...")
         }
+      }
+    },
+    watch: {
+      // 如果 `studentNumber` 发生改变，这个函数就会运行
+      studentNumber: function () {
+        this.password = this.studentNumber
       }
     }
   }

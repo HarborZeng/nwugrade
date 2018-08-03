@@ -7,7 +7,7 @@
       <div class="d-block text-center">
         <h3 v-html="msg"></h3>
       </div>
-      <b-btn class="mt-3" variant="outline-danger" block @click="hideModal">我知道了</b-btn>
+      <b-btn class="mt-3" variant="outline-danger" block @click="hideModal" v-html="closeMsg"></b-btn>
     </b-modal>
   </div>
 </template>
@@ -21,7 +21,8 @@
     data() {
       return {
         msgTitle: this.$store.state.dialog.msgTitle,
-        msg: this.$store.state.dialog.msg
+        msg: this.$store.state.dialog.msg,
+        closeMsg: this.$store.state.dialog.closeMsg,
       }
     },
     comments: {
@@ -39,7 +40,9 @@
       }
     },
     created() {
-      bus.$on("showDialog", () => {
+      bus.$on("showDialog", (msg, title) => {
+        this.msg = msg;
+        this.msgTitle = title;
         this.showModal()
       })
     }

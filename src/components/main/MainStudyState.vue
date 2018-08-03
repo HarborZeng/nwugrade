@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
+  <b-container class="container">
     <AlertMsg></AlertMsg>
     <Login></Login>
     <StudyState></StudyState>
-  </div>
+  </b-container>
 </template>
 
 <script>

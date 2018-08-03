@@ -1,18 +1,15 @@
 export default {
   state:{
-    show:false,
     msgTitle: '啊哦~',
     msg: '出错了~',
+    closeMsg: '我知道了'
   },
   mutations: {
     changeMsg(state, msg) {
       state.msg = msg
     },
-    showDlalog(state) {
-      state.show = true
+    changeMsgTitle(state, title) {
+      state.msg = title
     },
-    hideDlalog(state) {
-      state.show = false
-    }
   }
 }
