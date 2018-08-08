@@ -28,20 +28,20 @@
       </b-form-input>
     </b-form-group>
 
-    <b-form-checkbox v-model="checked"
-                     name="agreement"
-                     value=true
-                     unchecked-value=false
+    <b-form-checkbox name="agreement"
+                     v-model="agreementsChecked"
                      required>
       同意软件使用条款
       <a href="agreement.html" target="_blank">免责条款</a>
     </b-form-checkbox>
-    <b-button type="button" variant="primary btn-lg" @click="login()">查询</b-button>
+    <b-button type="button" variant="primary btn-lg" @click="login()">登录</b-button>
   </b-form>
 </template>
 
 <script>
   import bus from '../bus/bus'
+  import axios from 'axios'
+  import '../assets/md5.min'
 
   export default {
     name: 'Login',
@@ -49,7 +49,7 @@
       return {
         studentNumber: '',
         password: '',
-        checked: false
+        agreementsChecked: false,
       }
     },
     methods: {
@@ -58,10 +58,10 @@
         // 判断学号长度
         if (this.studentNumber.length !== 9 && this.studentNumber.length !== 10) {
           if (this.studentNumber.length === 0) {
-            bus.$emit("showDialog", "学号必填", "emmm...")
+            bus.$emit("showDialog", "学号必填", "emmmmmm...")
             return
           }
-          bus.$emit("showDialog", "学号长度有误", "emmm...")
+          bus.$emit("showDialog", "学号长度有误", "emmmmmm...")
           return
         }
         // 如果密码未填，自动填充和学号一样的密码
@@ -69,10 +69,43 @@
           this.password = this.studentNumber
         }
         // 必须同意条款才能继续
-        if (!this.checked) {
-          bus.$emit("showDialog", "必须同意条款才能继续", "emmm...")
+        if (!this.agreementsChecked) {
+          bus.$emit("showDialog", "必须同意条款才能继续", "emmmmmm...")
+          return
         }
-      }
+
+        // 准备登录所需post的数据
+        const data = JSON.stringify({
+          u: this.studentNumber,
+          tec: 'android:7.1.2',
+          type: '110',
+          p: md5(this.password + 'murp'),
+          ver: '214',
+          uuid: ''
+        })
+
+        bus.$emit("showLoading", "加载中", true)
+        // 发起登录的请求
+        axios.post(
+          '//' + this.$store.state.webserver.host + '/university-facade/Murp/Login',
+          data,
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        ).then(response => {
+          bus.$emit("loadingFinished")
+          if (response.status !== 200 || response.data.state !== 200) {
+            bus.$emit("showDialog", response.data.message, "emmmmmm...")
+          } else {
+            this.$store.commit("changeToken", response.data.token)
+          }
+        }).catch(error => {
+          bus.$emit("showDialog", error.message, "emmmmmm...")
+          bus.$emit("loadingFinished")
+        })
+      },
     },
     watch: {
       // 如果 `studentNumber` 发生改变，这个函数就会运行

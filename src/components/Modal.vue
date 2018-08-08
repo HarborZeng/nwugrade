@@ -1,8 +1,5 @@
 <template>
   <div>
-    <b-button @click="showModal">
-      Open Modal
-    </b-button>
     <b-modal ref="msgModal" hide-footer :title="msgTitle">
       <div class="d-block text-center">
         <h3 v-html="msg"></h3>
@@ -16,6 +13,7 @@
   import bModal from 'bootstrap-vue/es/components/modal/modal'
   import bModalDirective from 'bootstrap-vue/es/directives/modal/modal'
   import bus from '../bus/bus'
+
   export default {
     name: 'Modal',
     data() {

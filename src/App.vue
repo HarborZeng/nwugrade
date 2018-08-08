@@ -4,6 +4,7 @@
     <router-view/>
     <Footer></Footer>
     <Modal></Modal>
+    <Loading></Loading>
   </div>
 </template>
 
@@ -11,10 +12,11 @@
   import Header from "./components/Header";
   import Footer from "./components/Footer";
   import Modal from "./components/Modal";
+  import Loading from "./components/Loading";
 
   export default {
     name: 'App',
-    components: {Modal, Footer, Header}
+    components: {Loading, Modal, Footer, Header}
   }
 </script>
 
