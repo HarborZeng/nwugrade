@@ -2,7 +2,7 @@
   <b-container class="container">
     <AlertMsg></AlertMsg>
     <Login v-if="$store.state.nwugrade.token === ''"></Login>
-    <StudyState></StudyState>
+    <StudyState class="more-space"></StudyState>
   </b-container>
 </template>
 

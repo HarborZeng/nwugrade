@@ -2,7 +2,7 @@
   <b-container class="container">
     <AlertMsg></AlertMsg>
     <Login v-if="$store.state.nwugrade.token === ''"></Login>
-    <Grade></Grade>
+    <Grade class="more-space"></Grade>
   </b-container>
 </template>
 
@@ -20,6 +20,6 @@
   }
 </script>
 
-<style scoped>
+<style>
 
 </style>
