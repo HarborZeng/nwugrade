@@ -97,12 +97,12 @@
         ).then(response => {
           bus.$emit("loadingFinished")
           if (response.status !== 200 || response.data.state !== 200) {
-            bus.$emit("showDialog", response.data.message, "emmmmmm...")
+            bus.$emit("showDialog", response.data.message, "服务端异常 emmmm...")
           } else {
             this.$store.commit("changeToken", response.data.token)
           }
         }).catch(error => {
-          bus.$emit("showDialog", error.message, "emmmmmm...")
+          bus.$emit("showDialog", error.message, "客户端异常 emmmm...")
           bus.$emit("loadingFinished")
         })
       },
