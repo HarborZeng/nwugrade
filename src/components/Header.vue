@@ -1,13 +1,14 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <b-navbar toggleable="md" type="dark" variant="info" @click="changeUrlActiveState()">
+
+      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+
       <router-link class="navbar-brand" to="/">西大成绩查询 - m西北大学网页版（非官方）</router-link>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav" @click="changeUrlActiveState()">
+
+      <b-collapse is-nav id="nav_collapse">
+
+        <b-navbar-nav>
           <li :class="relativeAddress === '/' ? 'nav-item active' : 'nav-item'">
             <router-link class="nav-link" to="/">学习状态</router-link>
           </li>
@@ -20,9 +21,10 @@
           <li :class="relativeAddress === '/myLessons' ? 'nav-item active' : 'nav-item'">
             <router-link class="nav-link" to="/myLessons">我的课程</router-link>
           </li>
-        </ul>
-      </div>
-    </nav>
+        </b-navbar-nav>
+
+      </b-collapse>
+    </b-navbar>
   </div>
 </template>
 

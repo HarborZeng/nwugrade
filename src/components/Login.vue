@@ -84,7 +84,7 @@
           uuid: ''
         })
 
-        bus.$emit("showLoading", "加载中", true)
+        bus.$emit("showLoading", "加载中...", true)
         // 发起登录的请求
         axios.post(
           '//' + this.$store.state.webserver.host + '/university-facade/Murp/Login',
