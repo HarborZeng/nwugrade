@@ -1,5 +1,6 @@
 <template>
-  <b-alert variant="danger"
+  <b-alert variant="warning"
+           class="a-little_space"
            dismissible
            :show="showDismissibleAlert"
            @dismissed="showDismissibleAlert=false">

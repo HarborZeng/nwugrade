@@ -21,6 +21,9 @@
 </script>
 
 <style>
+  .a-little_space {
+    margin: 10px;
+  }
   .more-space {
     margin: 30px 5px 5px 5px;
   }
