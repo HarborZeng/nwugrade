@@ -34,7 +34,11 @@
       同意软件使用条款
       <a href="agreement.html" target="_blank">免责条款</a>
     </b-form-checkbox>
-    <b-button type="button" variant="primary btn-lg" @click="login()">登录</b-button>
+    <b-button type="button"
+              v-b-popover.hover.right="'你的密码我不会存储'"
+              title="放心"
+              variant="primary btn-lg"
+              @click="login()">登录</b-button>
   </b-form>
 </template>
 
