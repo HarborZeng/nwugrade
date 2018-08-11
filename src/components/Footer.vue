@@ -6,9 +6,8 @@
     </span> <br/>
     <span>
       项目源代码：
-      <a href="https://github.com/HarborZeng/grade.tellyouwhat.cn"
-         target="_blank">
-      https://github.com/HarborZeng/grade.tellyouwhat.cn
+      <a href="https://github.com/HarborZeng/grade.tellyouwhat.cn" target="_blank">
+        https://github.com/HarborZeng/grade.tellyouwhat.cn
       </a>
     </span> <br/>
     <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
