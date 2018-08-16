@@ -1,5 +1,5 @@
 <template>
-  <b-navbar sticky=true toggleable type="dark" variant="info" @click="changeUrlActiveState()">
+  <b-navbar :sticky="sticky" toggleable type="dark" variant="info" @click="changeUrlActiveState()">
 
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
@@ -22,23 +22,44 @@
         </li>
       </b-navbar-nav>
 
+      <b-navbar-nav class="ml-auto">
+        <b-nav-item-dropdown right>
+          <!-- Using button-content slot -->
+          <template slot="button-content">
+            <em v-html="studentName"></em>
+          </template>
+          <b-dropdown-item v-if="studentName !== '未登录'">学号：{{studentNumber}}</b-dropdown-item>
+          <b-dropdown-item v-if="studentName !== '未登录'">退出</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
+
     </b-collapse>
   </b-navbar>
 </template>
 
 <script>
+  import bus from '../bus/bus'
 
   export default {
     name: 'header',
     data() {
       return {
         relativeAddress: window.location.pathname,
+        studentName: '未登录',
+        studentNumber: '',
+        sticky: true
       }
     },
     methods: {
       changeUrlActiveState() {
         this.relativeAddress = window.location.pathname
       }
+    },
+    created() {
+      bus.$on("loginFinished", () => {
+        this.studentName = this.$store.state.nwugrade.usrData.name
+        this.studentNumber = this.$store.state.nwugrade.usrData.xh
+      })
     }
   }
 </script>

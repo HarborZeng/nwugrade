@@ -27,4 +27,7 @@
   .more-space {
     margin: 30px 5px 5px 5px;
   }
+  .more-space-top {
+    margin: 10px 1px 1px 1px;
+  }
 </style>

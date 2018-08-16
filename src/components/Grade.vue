@@ -1,9 +1,35 @@
 <template>
   <div>
     <div class="card harbor-padding">
-      <h2 class="card-title">成绩</h2>
-      <b-table striped hover :items="items" :fields="fields"></b-table>
-      <b-pagination align="center" size="md" :total-rows="totalRows" v-model="currentPage" :per-page="50" @input="changePage()">
+      <h2 class="card-title">成绩:</h2>
+      <h5 v-html="yearAndTermNo"></h5>
+      <b-col md="8" class="my-1">
+        <b-form-checkbox v-model="striped">条纹颜色</b-form-checkbox>
+        <b-form-checkbox v-model="bordered">显示表格边界</b-form-checkbox>
+        <b-form-checkbox v-model="small">缩小字体</b-form-checkbox>
+        <b-form-checkbox v-model="dark">夜间模式</b-form-checkbox>
+        <b-form-group horizontal label="过滤" class="mb-0">
+          <b-input-group>
+            <b-form-input v-model="filter" placeholder="输入任意内容"/>
+            <b-input-group-append>
+              <b-btn :disabled="!filter" @click="filter = ''">清空</b-btn>
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>
+      </b-col>
+      <b-table class="more-space-top"
+               hover
+               :items="items"
+               :fields="fields"
+               :striped="striped"
+               :bordered="bordered"
+               :small="small"
+               :dark="dark"
+               :filter="filter"
+               @filtered="onFiltered"></b-table>
+      <b-pagination align="center" size="md" :limit="limit"
+                    :total-rows="totalRows" v-model="currentPage"
+                    :per-page="50" @input="changePage()">
       </b-pagination>
     </div>
   </div>
@@ -20,8 +46,10 @@
     data() {
       return {
         // 初始化app里面的几个变量的值
-        allTheseYearGrades: [],
+        allTheseYearGrades: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ? [] : this.$store.state.nwugrade.allTheseYearGrades,
+
         currentPage: 1,
+
         fields: {
           courseName: {
             label: '课程',
@@ -40,17 +68,29 @@
             sortable: true
           }
         },
+
         items: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ? [
           {courseName: "空"}
         ] : this.$store.state.nwugrade.allTheseYearGrades[0],
-        totalRows: 1000
+
+        totalRows: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ?
+          1000 :
+          50 * this.$store.state.nwugrade.allTheseYearGrades.length,
+        limit: this.$store.state.nwugrade.allTheseYearGrades.length,
+        striped: true,
+        bordered: false,
+        small: false,
+        dark: false,
+        filter: null,
+        yearAndTermNo: '',
       }
     },
     methods: {
-      // 点击事件会调用此方法
       queryGrades() {
+        bus.$emit("showLoading", "加载中...", true)
         axios.get(this.$store.state.webserver.nwu_host + '/university-facade/MyUniversity/MyGrades?token=' + this.$store.state.nwugrade.token)
           .then(response => {
+            bus.$emit("loadingFinished")
             console.log(response)
             if (response.status === 200 && response.data.state === 200) {
               const serverData = response.data.data
@@ -63,30 +103,57 @@
                   aGrade.grade = serverData[term].items[grade].cj
                   aGrade.courseBelonging = serverData[term].items[grade].kcxz
                   aGrade.credit = serverData[term].items[grade].xf
+                  if (aGrade.grade < 60) {
+                    aGrade._rowVariant = 'danger'
+                  } else if (aGrade.grade >= 85) {
+                    aGrade._rowVariant = 'success'
+                  }
                   aTerm.push(aGrade)
+                  aTerm.year = serverData[term].xn
+                  aTerm.term = serverData[term].xq
                 }
                 this.allTheseYearGrades.push(aTerm)
-                this.items = this.allTheseYearGrades[0]
-                this.totalRows = 50 * this.allTheseYearGrades.length
               }
               this.$store.commit("saveAllTheseYearGrades", this.allTheseYearGrades)
+              this.showGradesInTable();
             } else {
               bus.$emit("showDialog", response.data.message, "查询你的成绩出错了")
             }
           }).catch(error => {
           bus.$emit("showDialog", error.toString(), "查询你的成绩出错了")
           console.warn(error)
+          bus.$emit("loadingFinished")
         })
       },
+      //翻页
       changePage() {
         this.items = this.allTheseYearGrades[this.currentPage - 1]
+        this.yearAndTermNo = this.allTheseYearGrades[this.currentPage - 1].year + '学年 第' + this.allTheseYearGrades[this.currentPage - 1].term + '学期'
+      },
+      //展示成绩
+      showGradesInTable() {
+        this.items = this.allTheseYearGrades[0]
+        this.totalRows = 50 * this.allTheseYearGrades.length
+        this.limit = this.allTheseYearGrades.length
+        this.yearAndTermNo = this.allTheseYearGrades[this.currentPage - 1].year + '学年 第' + this.allTheseYearGrades[this.currentPage - 1].term + '学期'
+      },
+      onFiltered (filteredItems) {
+        // Trigger pagination to update the number of buttons/pages due to filtering
+        this.totalRows = filteredItems.length
+        this.currentPage = 1
       }
     },
     created() {
+      //当监听到loginFinished事件时查询一下成绩
       bus.$on("loginFinished", () => {
         this.queryGrades()
       })
-    }
+
+      if (this.$store.state.nwugrade.token !== '' && this.$store.state.nwugrade.allTheseYearGrades.length === 0) {
+        //登录过，有token，但是没有查过成绩
+        this.queryGrades()
+      }
+    },
   }
 
 </script>
