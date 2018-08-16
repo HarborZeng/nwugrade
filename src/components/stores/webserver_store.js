@@ -1,6 +1,7 @@
 export default {
   state: {
-    host:'127.0.0.1',
+    nwu_host:'http://ydjw.nwu.edu.cn',
+    tellyouwhat_host:'http://gradeapi.tellyouwhat.cn',
   },
   mutations: {
     changeServerHost(state, hostAddr) {

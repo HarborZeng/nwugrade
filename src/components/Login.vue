@@ -91,7 +91,7 @@
         bus.$emit("showLoading", "加载中...", true)
         // 发起登录的请求
         axios.post(
-          '//' + this.$store.state.webserver.host + '/university-facade/Murp/Login',
+          this.$store.state.webserver.tellyouwhat_host + '/university-facade/Murp/Login',
           data,
           {
             headers: {
@@ -103,7 +103,9 @@
           if (response.status !== 200 || response.data.state !== 200) {
             bus.$emit("showDialog", response.data.message, "服务端异常 emmmm...")
           } else {
-            this.$store.commit("changeToken", response.data.token)
+            this.$store.commit("changeToken", response.data.data.token)
+            this.$store.commit("saveUserData", response.data.data)
+            bus.$emit("loginFinished")
           }
         }).catch(error => {
           bus.$emit("showDialog", error.message, "客户端异常 emmmm...")

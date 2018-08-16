@@ -2,23 +2,9 @@
   <div>
     <div class="card harbor-padding">
       <h2 class="card-title">成绩</h2>
-      <table class="table table-bordered table-hover table-width-controlled">
-        <tr>
-          <th>科目</th>
-          <th>成绩</th>
-        </tr>
-        <tr>
-          <td v-if="grades.length === 0" colspan="2"><span>无</span></td>
-        </tr>
-        <tr :key="Grade.kcmc" v-for="grade in grades">
-          <td><span v-html="Grade.kcmc"></span></td>
-          <td v-if="Grade.cj < 60" class="badge badge-pill badge-danger"><span v-html="Grade.cj"></span></td>
-          <td v-else-if="Grade.cj >= 60 && Grade.cj < 70" class="badge badge-pill badge-warning"><span
-            v-html="Grade.cj"></span></td>
-          <td v-else-if="Grade.cj >= 85" class="badge badge-pill badge-success"><span v-html="Grade.cj"></span></td>
-          <td v-else><span v-html="Grade.cj"></span></td>
-        </tr>
-      </table>
+      <b-table striped hover :items="items" :fields="fields"></b-table>
+      <b-pagination align="center" size="md" :total-rows="totalRows" v-model="currentPage" :per-page="50" @input="changePage()">
+      </b-pagination>
     </div>
   </div>
 </template>
@@ -27,119 +13,79 @@
   import 'bootstrap/dist/css/bootstrap.css'
   import 'bootstrap-vue/dist/bootstrap-vue.css'
   import axios from 'axios'
+  import bus from '../bus/bus'
 
   export default {
     name: 'Grade',
     data() {
       return {
         // 初始化app里面的几个变量的值
-        studentNumber: '',
-        password: '',
-        errmsg: '',
-        checked: false,
-        grades: [],
-        studyState: {}
+        allTheseYearGrades: [],
+        currentPage: 1,
+        fields: {
+          courseName: {
+            label: '课程',
+            sortable: false
+          },
+          grade: {
+            label: '成绩',
+            sortable: true
+          },
+          courseBelonging: {
+            label: '属性',
+            sortable: false
+          },
+          credit: {
+            label: '学分',
+            sortable: true
+          }
+        },
+        items: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ? [
+          {courseName: "空"}
+        ] : this.$store.state.nwugrade.allTheseYearGrades[0],
+        totalRows: 1000
       }
     },
     methods: {
       // 点击事件会调用此方法
-      login() {
-        // 将红色的信息显示成正在查询
-        this.errmsg = '正在查询。。。'
-
-        // 判断学号长度
-        if (this.studentNumber.length !== 10) {
-          this.errmsg = '学号长度有误'
-          $('#errMsgModal').modal('show')
-          return
-        }
-        // 如果密码未填，自动填充和学号一样的密码
-        if (this.password.trim() === '') {
-          this.password = this.studentNumber
-        }
-        // 必须同意条款才能继续
-        if (!this.checked) {
-          this.errmsg = '必须同意条款才能继续'
-          $('#errMsgModal').modal('show')
-          return
-        }
-
-        // 准备登录所需post的数据
-        const data = JSON.stringify({
-          u: this.studentNumber,
-          tec: 'android:7.1.2',
-          type: '110',
-          p: md5(this.password + 'murp'),
-          ver: '214',
-          uuid: ''
-        })
-
-        // 发起登录的请求
-        axios.post(
-          'http://gradeapi.tellyouwhat.cn/university-facade/Murp/Login',
-          data,
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-        )
+      queryGrades() {
+        axios.get(this.$store.state.webserver.nwu_host + '/university-facade/MyUniversity/MyGrades?token=' + this.$store.state.nwugrade.token)
           .then(response => {
-            if (response.status !== 200 || response.data.state !== 200) {
-              this.errmsg = response.data.message
-              $('#errMsgModal').modal('show')
-              return
+            console.log(response)
+            if (response.status === 200 && response.data.state === 200) {
+              const serverData = response.data.data
+              for (let term in serverData) {
+                let aTerm = []
+                for (let grade in serverData[term].items) {
+                  let aGrade = {}
+                  aGrade.isActive = true
+                  aGrade.courseName = serverData[term].items[grade].kcmc
+                  aGrade.grade = serverData[term].items[grade].cj
+                  aGrade.courseBelonging = serverData[term].items[grade].kcxz
+                  aGrade.credit = serverData[term].items[grade].xf
+                  aTerm.push(aGrade)
+                }
+                this.allTheseYearGrades.push(aTerm)
+                this.items = this.allTheseYearGrades[0]
+                this.totalRows = 50 * this.allTheseYearGrades.length
+              }
+              this.$store.commit("saveAllTheseYearGrades", this.allTheseYearGrades)
+            } else {
+              bus.$emit("showDialog", response.data.message, "查询你的成绩出错了")
             }
-            // 调用那两个函数
-            // http://ydjw.nwu.edu.cn/university-facade/MyUniversity/StudyState?token=
-            fetch('http://ydjw.nwu.edu.cn/university-facade/MyUniversity/StudyState?token=' + response.data.data.token)
-              .then(response => response.json())
-              .then(json => {
-                // 与服务器通信成功
-                if (json.state === 200) {
-                  // 服务器返回数据没有异常
-                  // 把查出来的学习状态json对象赋给学习状态studyState
-                  this.studyState = json.data
-                } else {
-                  this.errmsg = json.message
-                  $('#errMsgModal').modal('show')
-                }
-              })
-            axios.get('http://ydjw.nwu.edu.cn/university-facade/MyUniversity/MyGrades?token=' + response.data.data.token)
-              .then(response => {
-                // 与服务器通信没有错误
-                if (response.data.state === 200) {
-                  // 数据返回没有异常
-                  // 清空现有成绩
-                  this.grades = []
-                  // 循环把所有成绩装进数组
-                  for (let item in response.data.data) {
-                    for (let i in response.data.data[item].items) {
-                      this.grades.push(response.data.data[item].items[i])
-                    }
-                  }
-                } else {
-                  this.errmsg = response.data.message
-                  $('#errMsgModal').modal('show')
-                }
-              })
-              .catch(error => {
-                console.log(error)
-                this.errmsg = error.toString()
-                $('#errMsgModal').modal('show')
-              })
-          })
-          .catch(error => {
-            this.errmsg = '出错: ' + error.toString()
-            $('#errMsgModal').modal('show')
-          })
+          }).catch(error => {
+          bus.$emit("showDialog", error.toString(), "查询你的成绩出错了")
+          console.warn(error)
+        })
+      },
+      changePage() {
+        this.items = this.allTheseYearGrades[this.currentPage - 1]
       }
     },
-    watch: {
-      // 如果 `studentNumber` 发生改变，这个函数就会运行
-      studentNumber: function () {
-        this.password = this.studentNumber
-      }
+    created() {
+      bus.$on("loginFinished", () => {
+        this.queryGrades()
+      })
     }
   }
 
@@ -169,7 +115,6 @@
     padding: 15px;
     margin: 0 auto 20px auto;
   }
-
 
   h1 a {
     color: #3c3c3c;
