@@ -2,11 +2,10 @@
   <div>
     <div class="card harbor-padding">
       <h2 class="card-title">成绩:</h2>
-      <h5 v-html="yearAndTermNo"></h5>
       <b-col md="8" class="my-1">
         <b-form-checkbox v-model="striped">条纹颜色</b-form-checkbox>
-        <b-form-checkbox v-model="bordered">显示表格边界</b-form-checkbox>
-        <b-form-checkbox v-model="small">缩小字体</b-form-checkbox>
+        <b-form-checkbox v-model="bordered">显示边界</b-form-checkbox>
+        <b-form-checkbox v-model="small">紧凑</b-form-checkbox>
         <b-form-checkbox v-model="dark">夜间模式</b-form-checkbox>
         <b-form-group horizontal label="过滤" class="mb-0">
           <b-input-group>
@@ -17,6 +16,7 @@
           </b-input-group>
         </b-form-group>
       </b-col>
+      <h5 v-html="yearAndTermNo"></h5>
       <b-table class="more-space-top"
                hover
                :items="items"
@@ -25,8 +25,7 @@
                :bordered="bordered"
                :small="small"
                :dark="dark"
-               :filter="filter"
-               @filtered="onFiltered"></b-table>
+               :filter="filter"></b-table>
       <b-pagination align="center" size="md" :limit="limit"
                     :total-rows="totalRows" v-model="currentPage"
                     :per-page="50" @input="changePage()">
@@ -91,9 +90,10 @@
         axios.get(this.$store.state.webserver.nwu_host + '/university-facade/MyUniversity/MyGrades?token=' + this.$store.state.nwugrade.token)
           .then(response => {
             bus.$emit("loadingFinished")
-            console.log(response)
             if (response.status === 200 && response.data.state === 200) {
               const serverData = response.data.data
+              //清空之前留下的数据
+              this.allTheseYearGrades = []
               for (let term in serverData) {
                 let aTerm = []
                 for (let grade in serverData[term].items) {
@@ -137,16 +137,23 @@
         this.limit = this.allTheseYearGrades.length
         this.yearAndTermNo = this.allTheseYearGrades[this.currentPage - 1].year + '学年 第' + this.allTheseYearGrades[this.currentPage - 1].term + '学期'
       },
-      onFiltered (filteredItems) {
-        // Trigger pagination to update the number of buttons/pages due to filtering
-        this.totalRows = filteredItems.length
-        this.currentPage = 1
-      }
     },
     created() {
       //当监听到loginFinished事件时查询一下成绩
       bus.$on("loginFinished", () => {
         this.queryGrades()
+      })
+
+      bus.$on("loginExit", () => {
+        this.allTheseYearGrades = [
+          {courseName: "空"}
+        ]
+        this.totalRows = 50 * this.allTheseYearGrades.length
+        this.limit = this.allTheseYearGrades.length
+        this.items = [
+          {courseName: "空"}
+        ]
+        this.yearAndTermNo = ''
       })
 
       if (this.$store.state.nwugrade.token !== '' && this.$store.state.nwugrade.allTheseYearGrades.length === 0) {
@@ -173,16 +180,6 @@
     margin: 0 10px;
   }
 
-  .harbor-container {
-    margin-top: 60px;
-  }
-
-  .harbor-body {
-    max-width: 100%;
-    padding: 15px;
-    margin: 0 auto 20px auto;
-  }
-
   h1 a {
     color: #3c3c3c;
   }
@@ -197,22 +194,4 @@
     padding: 10px;
   }
 
-  .agree-pre {
-    padding: 10px;
-    font-size: 12px;
-    /*    text-indent: 2em;*/
-    white-space: pre-wrap;
-    white-space: -moz-pre-wrap; /*Mozilla,since1999*/
-    white-space: -o-pre-wrap; /*Opera7*/
-    word-wrap: break-word; /*InternetExplorer5.5+*/
-  }
-
-  .table-width-controlled {
-    max-width: 500px;
-    margin: 20px auto;
-  }
-
-  .table-study {
-    font-size: small;
-  }
 </style>

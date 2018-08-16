@@ -14,5 +14,10 @@ export default {
     saveAllTheseYearGrades(state, allTheseYearGrades) {
       state.allTheseYearGrades = allTheseYearGrades
     },
+    resetAllNwuData(state) {
+      state.token = ''
+      state.usrData = {}
+      state.allTheseYearGrades = []
+    }
   }
 }

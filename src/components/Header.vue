@@ -29,7 +29,7 @@
             <em v-html="studentName"></em>
           </template>
           <b-dropdown-item v-if="studentName !== '未登录'">学号：{{studentNumber}}</b-dropdown-item>
-          <b-dropdown-item v-if="studentName !== '未登录'">退出</b-dropdown-item>
+          <b-dropdown-item v-if="studentName !== '未登录'" @click="exit">退出</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
 
@@ -53,6 +53,12 @@
     methods: {
       changeUrlActiveState() {
         this.relativeAddress = window.location.pathname
+      },
+      exit() {
+        this.$store.commit("resetAllNwuData")
+        bus.$emit("loginExit")
+        this.studentName = '未登录'
+        this.studentNumber = ''
       }
     },
     created() {
