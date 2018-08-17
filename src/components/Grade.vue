@@ -17,9 +17,9 @@
         </b-form-group>
       </b-col>
       <h5 v-html="yearAndTermNo"></h5>
-      <b-table class="more-space-top"
+      <b-table class="more-space-top small-font"
                hover
-               :items="items"
+               :items="grades"
                :fields="fields"
                :striped="striped"
                :bordered="bordered"
@@ -45,7 +45,9 @@
     data() {
       return {
         // 初始化app里面的几个变量的值
-        allTheseYearGrades: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ? [] : this.$store.state.nwugrade.allTheseYearGrades,
+        allTheseYearGrades: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ? [
+          [{courseName: "空"}]
+        ] : this.$store.state.nwugrade.allTheseYearGrades,
 
         currentPage: 1,
 
@@ -68,9 +70,9 @@
           }
         },
 
-        items: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ? [
+        grades: [
           {courseName: "空"}
-        ] : this.$store.state.nwugrade.allTheseYearGrades[0],
+        ],
 
         totalRows: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ?
           1000 :
@@ -101,7 +103,9 @@
                   aGrade.isActive = true
                   aGrade.courseName = serverData[term].items[grade].kcmc
                   aGrade.grade = serverData[term].items[grade].cj
-                  aGrade.courseBelonging = serverData[term].items[grade].kcxz
+                  aGrade.courseBelonging = serverData[term].items[grade].kcxz !== undefined ?
+                    serverData[term].items[grade].kcxz.substring(0, serverData[term].items[grade].kcxz.length - 2) :
+                    serverData[term].items[grade].kcxz
                   aGrade.credit = serverData[term].items[grade].xf
                   if (aGrade.grade < 60) {
                     aGrade._rowVariant = 'danger'
@@ -127,12 +131,13 @@
       },
       //翻页
       changePage() {
-        this.items = this.allTheseYearGrades[this.currentPage - 1]
-        this.yearAndTermNo = this.allTheseYearGrades[this.currentPage - 1].year + '学年 第' + this.allTheseYearGrades[this.currentPage - 1].term + '学期'
+        this.grades = this.allTheseYearGrades[this.currentPage - 1]
+        if (this.allTheseYearGrades[this.currentPage - 1].hasOwnProperty('year') && this.allTheseYearGrades[this.currentPage - 1].hasOwnProperty('term'))
+          this.yearAndTermNo = this.allTheseYearGrades[this.currentPage - 1].year + '学年 第' + this.allTheseYearGrades[this.currentPage - 1].term + '学期'
       },
       //展示成绩
       showGradesInTable() {
-        this.items = this.allTheseYearGrades[0]
+        this.grades = this.allTheseYearGrades[0]
         this.totalRows = 50 * this.allTheseYearGrades.length
         this.limit = this.allTheseYearGrades.length
         this.yearAndTermNo = this.allTheseYearGrades[this.currentPage - 1].year + '学年 第' + this.allTheseYearGrades[this.currentPage - 1].term + '学期'
@@ -146,11 +151,11 @@
 
       bus.$on("loginExit", () => {
         this.allTheseYearGrades = [
-          {courseName: "空"}
+          [{courseName: "空"}]
         ]
         this.totalRows = 50 * this.allTheseYearGrades.length
         this.limit = this.allTheseYearGrades.length
-        this.items = [
+        this.grades = [
           {courseName: "空"}
         ]
         this.yearAndTermNo = ''
@@ -194,4 +199,7 @@
     padding: 10px;
   }
 
+  .small-font {
+    font-size: small;
+  }
 </style>
