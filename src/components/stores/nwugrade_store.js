@@ -22,6 +22,7 @@ export default {
       state.token = ''
       state.usrData = {}
       state.allTheseYearGrades = []
+      state.studyState = {}
     }
   }
 }

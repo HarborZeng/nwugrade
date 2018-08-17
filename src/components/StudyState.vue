@@ -16,7 +16,7 @@
     name: 'StudyState',
     data() {
       return {
-        studyState: this.$store.state.nwugrade.studyState === {} ? {"k":"msg", "v":"暂无"} : this.$store.state.nwugrade.studyState,
+        studyState: Object.keys(this.$store.state.nwugrade.studyState).length === 0 ? {"k":"msg", "v":"暂无"} : this.$store.state.nwugrade.studyState,
       }
     },
     methods: {
@@ -52,7 +52,7 @@
         this.studyState = ''
       })
 
-      if (this.$store.state.nwugrade.token !== '' && this.$store.state.nwugrade.studyState === {}) {
+      if (this.$store.state.nwugrade.token !== '' && Object.keys(this.$store.state.nwugrade.studyState).length === 0) {
         //登录过，有token，但是没有查过学习状态
         this.queryStudyState()
       }

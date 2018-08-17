@@ -7,6 +7,7 @@
         <b-form-checkbox v-model="bordered">边界</b-form-checkbox>
         <b-form-checkbox v-model="small">紧凑</b-form-checkbox>
         <b-form-checkbox v-model="dark">夜间</b-form-checkbox>
+        <b-form-checkbox v-model="highlight">高亮优秀和不及格的成绩</b-form-checkbox>
         <b-form-group horizontal label="过滤" class="mb-0">
           <b-input-group>
             <b-form-input v-model="filter" placeholder="输入任意内容"/>
@@ -84,6 +85,7 @@
         dark: false,
         filter: null,
         yearAndTermNo: '',
+        highlight: false
       }
     },
     methods: {
@@ -107,10 +109,12 @@
                     serverData[term].items[grade].kcxz.substring(0, serverData[term].items[grade].kcxz.length - 2) :
                     serverData[term].items[grade].kcxz
                   aGrade.credit = serverData[term].items[grade].xf
-                  if (aGrade.grade < 60) {
-                    aGrade._rowVariant = 'danger'
-                  } else if (aGrade.grade >= 85) {
-                    aGrade._rowVariant = 'success'
+                  if (this.highlight) {
+                    if (aGrade.grade < 60) {
+                      aGrade._rowVariant = 'danger'
+                    } else if (aGrade.grade >= 85) {
+                      aGrade._rowVariant = 'success'
+                    }
                   }
                   aTerm.push(aGrade)
                   aTerm.year = serverData[term].xn
@@ -134,6 +138,7 @@
         this.grades = this.allTheseYearGrades[this.currentPage - 1]
         if (this.allTheseYearGrades[this.currentPage - 1].hasOwnProperty('year') && this.allTheseYearGrades[this.currentPage - 1].hasOwnProperty('term'))
           this.yearAndTermNo = this.allTheseYearGrades[this.currentPage - 1].year + '学年 第' + this.allTheseYearGrades[this.currentPage - 1].term + '学期'
+        this.doHighLight()
       },
       //展示成绩
       showGradesInTable() {
@@ -142,6 +147,21 @@
         this.limit = this.allTheseYearGrades.length
         this.yearAndTermNo = this.allTheseYearGrades[this.currentPage - 1].year + '学年 第' + this.allTheseYearGrades[this.currentPage - 1].term + '学期'
       },
+      doHighLight() {
+        if (this.highlight) {
+          this.grades.forEach(grade => {
+            if (grade.grade < 60) {
+              grade._rowVariant = 'danger'
+            } else if (grade.grade >= 85) {
+              grade._rowVariant = 'success'
+            }
+          })
+        } else {
+          this.grades.forEach(grade => {
+            delete grade._rowVariant
+          })
+        }
+      }
     },
     created() {
       //当监听到loginFinished事件时查询一下成绩
@@ -166,6 +186,11 @@
         this.queryGrades()
       }
     },
+    watch: {
+      highlight: function () {
+        this.doHighLight()
+      }
+    }
   }
 
 </script>
