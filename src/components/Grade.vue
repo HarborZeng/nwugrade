@@ -70,9 +70,9 @@
           }
         },
 
-        grades: [
+        grades: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ? [
           {courseName: "空"}
-        ],
+        ] : this.$store.state.nwugrade.allTheseYearGrades[0],
 
         totalRows: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ?
           1000 :
