@@ -13,13 +13,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'studyStateSPA',
-      component: StudyStateSPA
-    },
-    {
-      path: '/grade',
       name: 'gradesSPA',
       component: GradesSPA
+    },
+    {
+      path: '/studyState',
+      name: 'studyStateSPA',
+      component: StudyStateSPA
     },
     {
       path: '/nextTermLessons',
@@ -32,7 +32,7 @@ export default new Router({
       component: MyLessonsSPA
     },
     {
-      path: '*',
+      path: '/*',
       component: Error
     }
   ]

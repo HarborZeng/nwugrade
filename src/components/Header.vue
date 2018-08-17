@@ -9,10 +9,10 @@
 
       <b-navbar-nav>
         <li :class="relativeAddress === '/' ? 'nav-item active' : 'nav-item'">
-          <router-link class="nav-link" to="/">学习状态</router-link>
+          <router-link class="nav-link" to="/">成绩查询</router-link>
         </li>
-        <li :class="relativeAddress === '/grade' ? 'nav-item active' : 'nav-item'">
-          <router-link class="nav-link" to="/grade">成绩查询</router-link>
+        <li :class="relativeAddress === '/studyState' ? 'nav-item active' : 'nav-item'">
+          <router-link class="nav-link" to="/studyState">学习状态</router-link>
         </li>
         <li :class="relativeAddress === '/nextTermLessons' ? 'nav-item active' : 'nav-item'">
           <router-link class="nav-link" to="/nextTermLessons">下学期课</router-link>
