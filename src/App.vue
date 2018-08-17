@@ -28,6 +28,6 @@
     margin: 30px 5px 5px 5px;
   }
   .more-space-top {
-    margin: 10px 1px 1px 1px;
+    margin: 10px 0 0 0;
   }
 </style>

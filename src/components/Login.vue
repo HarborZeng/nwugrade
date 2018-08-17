@@ -1,5 +1,5 @@
 <template>
-  <b-form class="col-md-6">
+  <b-form class="col-md-6 more-space-top">
 
     <b-form-group
       label="学号："

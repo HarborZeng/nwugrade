@@ -3,10 +3,10 @@
     <div class="card harbor-padding">
       <h2 class="card-title">成绩:</h2>
       <b-col md="8" class="my-1">
-        <b-form-checkbox v-model="striped">条纹颜色</b-form-checkbox>
-        <b-form-checkbox v-model="bordered">显示边界</b-form-checkbox>
+        <b-form-checkbox v-model="striped">条纹</b-form-checkbox>
+        <b-form-checkbox v-model="bordered">边界</b-form-checkbox>
         <b-form-checkbox v-model="small">紧凑</b-form-checkbox>
-        <b-form-checkbox v-model="dark">夜间模式</b-form-checkbox>
+        <b-form-checkbox v-model="dark">夜间</b-form-checkbox>
         <b-form-group horizontal label="过滤" class="mb-0">
           <b-input-group>
             <b-form-input v-model="filter" placeholder="输入任意内容"/>
@@ -17,7 +17,7 @@
         </b-form-group>
       </b-col>
       <h5 v-html="yearAndTermNo"></h5>
-      <b-table class="more-space-top small-font"
+      <b-table class="small-font"
                hover
                :items="grades"
                :fields="fields"
