@@ -38,16 +38,30 @@
 </template>
 
 <script>
-  import bus from '../bus/bus'
-
   export default {
-    name: 'header',
+    name: 'myheader',
     data() {
       return {
         relativeAddress: window.location.pathname,
-        studentName: '未登录',
-        studentNumber: '',
         sticky: true
+      }
+    },
+    computed: {
+      studentName: {
+        get: function () {
+          return this.$store.state.nwugrade.usrData.name
+        },
+        set: function (newValue) {
+
+        }
+      },
+      studentNumber: {
+        get: function () {
+          return this.$store.state.nwugrade.usrData.xh
+        },
+        set: function (newValue) {
+
+        }
       }
     },
     methods: {
@@ -56,17 +70,8 @@
       },
       exit() {
         this.$store.commit("resetAllNwuData")
-        bus.$emit("loginExit")
-        this.studentName = '未登录'
-        this.studentNumber = ''
       }
     },
-    created() {
-      bus.$on("loginFinished", () => {
-        this.studentName = this.$store.state.nwugrade.usrData.name
-        this.studentNumber = this.$store.state.nwugrade.usrData.xh
-      })
-    }
   }
 </script>
 

@@ -13,11 +13,14 @@
 
   export default {
     name: 'StudyState',
-    data() {
-      return {
-        studyState: Object.keys(this.$store.state.nwugrade.studyState).length === 0 ?
-          {"k": "msg", "v": "暂无"} :
-          this.$store.state.nwugrade.studyState,
+    computed: {
+      studyState: {
+        get: function () {
+          return this.$store.state.nwugrade.studyState
+        },
+        set: function (newValue) {
+
+        }
       }
     },
     methods: {
@@ -30,10 +33,7 @@
           .then(json => {
             // 与服务器通信成功
             if (json.state === 200) {
-              // 服务器返回数据没有异常
-              // 把查出来的学习状态json对象赋给学习状态studyState
-              this.studyState = json.data
-              this.$store.commit("saveStudyState", this.studyState)
+              this.$store.commit("saveStudyState", json.data)
             } else {
               bus.$emit("showDialog", json.message, "查询你的状态出错了")
             }
@@ -51,12 +51,7 @@
         this.queryStudyState()
       })
 
-      bus.$on("loginExit", () => {
-        this.studyState = ''
-      })
-
-      if (this.$store.state.nwugrade.token !== '' &&
-        Object.keys(this.$store.state.nwugrade.studyState).length === 0) {
+      if (this.$store.state.nwugrade.token !== '') {
         //登录过，有token，但是没有查过学习状态
         this.queryStudyState()
       }

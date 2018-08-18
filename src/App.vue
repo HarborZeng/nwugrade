@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header></Header>
+    <MyHeader></MyHeader>
     <router-view/>
     <Footer></Footer>
     <Modal></Modal>
@@ -9,14 +9,14 @@
 </template>
 
 <script>
-  import Header from "./components/Header";
+  import MyHeader from "./components/MyHeader";
   import Footer from "./components/Footer";
   import Modal from "./components/Modal";
   import Loading from "./components/Loading";
 
   export default {
     name: 'App',
-    components: {Loading, Modal, Footer, Header}
+    components: {Loading, Modal, Footer, MyHeader}
   }
 </script>
 

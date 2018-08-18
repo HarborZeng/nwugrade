@@ -1,9 +1,9 @@
 export default {
   state: {
     token: '',
-    usrData: {},
+    usrData: {name: '未登录', xh: '未登录'},
     allTheseYearGrades: [[{courseName: '空'}]],
-    studyState: {},
+    studyState: {"k": "msg", "v": "登录即查询"},
   },
   mutations: {
     changeToken(state, token) {
@@ -38,9 +38,9 @@ export default {
     },
     resetAllNwuData(state) {
       state.token = ''
-      state.usrData = {}
+      state.usrData = {name: '未登录', xh: '未登录'}
       state.allTheseYearGrades = [[{courseName: '空'}]]
-      state.studyState = {}
+      state.studyState = {"k": "msg", "v": "登录即查询"}
     }
   }
 }
