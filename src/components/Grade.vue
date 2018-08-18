@@ -212,6 +212,9 @@
       },
 
       refreshGrades() {
+        if (this.$store.state.nwugrade.token === '') {
+          return
+        }
         let deg = 0;
         let interval = setInterval(() => {
           deg += 3;
