@@ -3,7 +3,10 @@
 
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-    <router-link class="navbar-brand" to="/">m西北大学网页版</router-link>
+    <b-navbar-brand>
+      <img src="/static/nav-img.png">
+      <router-link class="navbar-brand" to="/">m西北大学网页版</router-link>
+    </b-navbar-brand>
 
     <b-collapse is-nav id="nav_collapse">
 
