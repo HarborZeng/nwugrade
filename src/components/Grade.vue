@@ -46,6 +46,10 @@
     data() {
       return {
         // 初始化app里面的几个变量的值
+        allTheseYearGrades: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ? [
+          [{courseName: "空"}]
+        ] : this.$store.state.nwugrade.allTheseYearGrades,
+
         currentPage: 1,
 
         fields: {
@@ -66,6 +70,15 @@
             sortable: true
           }
         },
+
+        grades: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ? [
+          {courseName: "空"}
+        ] : this.$store.state.nwugrade.allTheseYearGrades[0],
+
+        totalRows: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ?
+          1000 :
+          50 * this.$store.state.nwugrade.allTheseYearGrades.length,
+        limit: this.$store.state.nwugrade.allTheseYearGrades.length,
 
         striped: true,
         bordered: false,
