@@ -20,8 +20,8 @@
     components: {Loading, Modal, Footer, MyHeader},
     created() {
       document.onkeydown = e => {
-        if (e.keyCode === 116) {
-          bus.$emit("f5pressed")
+        if (e.key === 'F5' || (e.ctrlKey && e.key === 'r' || e.key === 'R')) {
+          bus.$emit("refreshRequested")
           return false;
         }
       }

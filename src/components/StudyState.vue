@@ -51,7 +51,7 @@
         this.queryStudyState()
       })
 
-      bus.$on("f5pressed", () => {
+      bus.$on("refreshRequested", () => {
         if (this.$store.state.nwugrade.token !== '') {
           //登录过，有token，但是没有查过学习状态
           this.queryStudyState()
