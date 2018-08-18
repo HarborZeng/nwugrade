@@ -4,8 +4,6 @@ export default {
     tellyouwhat_host:'http://gradeapi.tellyouwhat.cn',
   },
   mutations: {
-    changeServerHost(state, hostAddr) {
-      state.host = hostAddr
-    }
+
   }
 }
