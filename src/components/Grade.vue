@@ -8,6 +8,7 @@
         <b-form-checkbox v-model="small" id="checkbox-small">紧凑</b-form-checkbox>
         <b-tooltip :show.sync="showSmallTip"
                    target="checkbox-small"
+                   triggers="null"
                    placement="top">
           <strong>您的屏幕尺寸较小，已为您自动勾选紧凑</strong>
         </b-tooltip>
@@ -189,15 +190,17 @@
 
       this.doHighLight()
 
-      if (this.$store.state.nwugrade.token === '') {
-        //加载页面的时候，提示屏幕大小
-        if (document.documentElement.clientWidth < 470) {
-          this.small = true
-          this.showSmallTip = true
+      //加载页面的时候，提示屏幕大小
+      if (document.documentElement.clientWidth < 470) {
+        this.small = true
+        if (this.$store.state.nwugrade.token === '') {
           setTimeout(() => {
-            this.showSmallTip = false
-          }, 2000)
+            this.showSmallTip = true
+          }, 300)
         }
+        setTimeout(() => {
+          this.showSmallTip = false
+        }, 2000)
       }
 
     },
