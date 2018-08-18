@@ -25,7 +25,6 @@
       </b-col>
       <h5 v-html="yearAndTermNo" class="more-space-top"></h5>
       <b-table :class="small ? 'small-font' : ''"
-
                hover
                :items="grades"
                :fields="fields"
