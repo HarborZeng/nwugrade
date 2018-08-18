@@ -54,7 +54,7 @@
                         required>
           </b-form-input>
         </b-form-group>
-        <b-button variant="primary" type="button"
+        <b-button variant="outline-success" type="button"
                   @click="subscribeGradesChanges"
                   class="float-right">订阅</b-button>
       </b-col>
