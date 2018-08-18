@@ -37,6 +37,10 @@
                     :total-rows="totalRows" v-model="currentPage"
                     :per-page="50">
       </b-pagination>
+      <img src="/static/refresh.png"
+           class="refresh-btn float-right"
+           id="refreshImage"
+           @click="refreshGrades"/>
     </div>
     <div class="card harbor-padding more-space-top">
       <b-col md="8" class="my-1">
@@ -50,7 +54,9 @@
                         required>
           </b-form-input>
         </b-form-group>
-        <b-button variant="primary" type="button" @click="subscribeGradesChanges" class="float-right">订阅</b-button>
+        <b-button variant="primary" type="button"
+                  @click="subscribeGradesChanges"
+                  class="float-right">订阅</b-button>
       </b-col>
     </div>
   </div>
@@ -203,6 +209,18 @@
 
       subscribeGradesChanges() {
         bus.$emit("showDialog", "这项功能正在实验中，敬请期待", "Sorry")
+      },
+
+      refreshGrades() {
+        let deg = 0;
+        let interval = setInterval(() => {
+          deg += 3;
+          document.getElementById('refreshImage').style.transform = "rotate(" + deg + "deg)";
+          if (deg > 360) {
+            clearInterval(interval)
+          }
+        }, 2);
+        this.queryGrades()
       }
     },
     created() {
@@ -279,5 +297,10 @@
 
   .small-font {
     font-size: small;
+  }
+
+  .refresh-btn {
+    width: 60px;
+    height: 60px;
   }
 </style>
