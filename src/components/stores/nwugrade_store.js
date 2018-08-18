@@ -1,12 +1,13 @@
 export default {
   state: {
-    token: '',
+    token: localStorage.getItem("token") === null ? '' : localStorage.getItem("token"),
     usrData: {name: '未登录', xh: '未登录'},
     allTheseYearGrades: [[{courseName: '空'}]],
     studyState: {"k": "msg", "v": "登录即查询"},
   },
   mutations: {
     changeToken(state, token) {
+      localStorage.setItem("token", token)
       state.token = token
     },
     saveUserData(state, usrData) {
