@@ -72,6 +72,7 @@
           }
         },
 
+        small: false,
         striped: true,
         bordered: false,
         dark: false,
@@ -123,20 +124,7 @@
         set: function (newValue) {
 
         }
-      },
-      small: {
-        get: function () {
-          this.showSmallTip = true
-          setTimeout(() => {
-            this.showSmallTip = false
-          }, 3000)
-          return document.documentElement.clientWidth < 470
-        },
-        set: function (newValue) {
-
-        }
       }
-
     },
     methods: {
       queryGrades() {
@@ -200,6 +188,18 @@
       }
 
       this.doHighLight()
+
+      if (this.$store.state.nwugrade.token === '') {
+        //加载页面的时候，提示屏幕大小
+        if (document.documentElement.clientWidth < 470) {
+          this.small = true
+          this.showSmallTip = true
+          setTimeout(() => {
+            this.showSmallTip = false
+          }, 2000)
+        }
+      }
+
     },
     watch: {
       highlight: function () {
