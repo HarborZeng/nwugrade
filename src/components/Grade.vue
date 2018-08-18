@@ -168,7 +168,7 @@
           })
       },
 
-      doHighLight() {
+      performHighLight() {
         if (this.highlight) {
           this.$store.commit("doHighlightStore")
         } else {
@@ -182,13 +182,12 @@
         this.queryGrades()
       })
 
-      if (this.$store.state.nwugrade.token !== '' &&
-        this.$store.state.nwugrade.allTheseYearGrades.length === 0) {
+      if (this.$store.state.nwugrade.token !== '') {
         //登录过，有token，但是没有查过成绩
         this.queryGrades()
       }
 
-      this.doHighLight()
+      this.performHighLight()
 
       //加载页面的时候，提示屏幕大小
       if (document.documentElement.clientWidth < 470) {
@@ -206,7 +205,7 @@
     },
     watch: {
       highlight: function () {
-        this.doHighLight()
+        this.performHighLight()
       }
     }
   }
