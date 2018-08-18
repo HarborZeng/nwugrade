@@ -35,6 +35,9 @@
             if (json.state === 200) {
               this.$store.commit("saveStudyState", json.data)
             } else {
+              if (json.state === 2003) {
+                this.$store.commit("resetAllNwuData")
+              }
               bus.$emit("showDialog", json.message, "查询你的状态出错了")
             }
             bus.$emit("loadingFinished")

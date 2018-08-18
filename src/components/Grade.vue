@@ -180,6 +180,9 @@
               }
               this.$store.commit("saveAllTheseYearGrades", allGrades)
             } else {
+              if (response.data.state === 2003) {
+                this.$store.commit("resetAllNwuData")
+              }
               bus.$emit("showDialog", response.data.message, "查询你的成绩出错了")
             }
           })
