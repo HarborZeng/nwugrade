@@ -1,7 +1,11 @@
 export default {
   state: {
     token: localStorage.getItem("token") === null ? '' : localStorage.getItem("token"),
-    usrData: {name: '未登录', xh: '未登录'},
+
+    usrData: localStorage.getItem("usrData") === null ?
+      {name: '未登录', xh: '未登录'} :
+      JSON.parse(localStorage.getItem("usrData")),
+
     allTheseYearGrades: [[{courseName: '空'}]],
     studyState: {"k": "msg", "v": "登录即查询"},
   },
@@ -11,6 +15,7 @@ export default {
       state.token = token
     },
     saveUserData(state, usrData) {
+      localStorage.setItem("usrData", JSON.stringify(usrData))
       state.usrData = usrData
     },
     saveAllTheseYearGrades(state, allTheseYearGrades) {
