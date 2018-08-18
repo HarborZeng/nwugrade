@@ -5,7 +5,12 @@
       <b-col md="8" class="my-1">
         <b-form-checkbox v-model="striped">条纹</b-form-checkbox>
         <b-form-checkbox v-model="bordered">边界</b-form-checkbox>
-        <b-form-checkbox v-model="small">紧凑</b-form-checkbox>
+        <b-form-checkbox v-model="small" id="checkbox-small">紧凑</b-form-checkbox>
+        <b-tooltip :show.sync="showSmallTip"
+                   target="checkbox-small"
+                   placement="top">
+          <strong>您的屏幕尺寸较小，已为您自动勾选紧凑</strong>
+        </b-tooltip>
         <b-form-checkbox v-model="dark">夜间</b-form-checkbox>
         <b-form-checkbox v-model="highlight">高亮优秀和不及格的成绩</b-form-checkbox>
         <b-form-group horizontal label="过滤" class="mb-0">
@@ -71,7 +76,8 @@
         bordered: false,
         dark: false,
         filter: null,
-        highlight: false
+        highlight: false,
+        showSmallTip: false
       }
     },
     computed: {
@@ -120,6 +126,10 @@
       },
       small: {
         get: function () {
+          this.showSmallTip = true
+          setTimeout(() => {
+            this.showSmallTip = false
+          }, 3000)
           return document.documentElement.clientWidth < 470
         },
         set: function (newValue) {
