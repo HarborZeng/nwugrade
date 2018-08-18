@@ -16,7 +16,7 @@
     data() {
       return {
         studyState: Object.keys(this.$store.state.nwugrade.studyState).length === 0 ?
-          {"k":"msg", "v":"暂无"} :
+          {"k": "msg", "v": "暂无"} :
           this.$store.state.nwugrade.studyState,
       }
     },

@@ -2,7 +2,7 @@ export default {
   state: {
     token: '',
     usrData: {},
-    allTheseYearGrades: [],
+    allTheseYearGrades: [[{courseName: '空'}]],
     studyState: {},
   },
   mutations: {
@@ -18,10 +18,28 @@ export default {
     saveStudyState(state, studyState) {
       state.studyState = studyState
     },
+    doHighlightStore(state) {
+      state.allTheseYearGrades.forEach(term => {
+        term.forEach(grade => {
+          if (grade.grade < 60) {
+            grade._rowVariant = 'danger'
+          } else if (grade.grade >= 85) {
+            grade._rowVariant = 'success'
+          }
+        })
+      })
+    },
+    undoHighlightStore(state) {
+      state.allTheseYearGrades.forEach(term => {
+        term.forEach(grade => {
+          delete grade._rowVariant
+        })
+      })
+    },
     resetAllNwuData(state) {
       state.token = ''
       state.usrData = {}
-      state.allTheseYearGrades = []
+      state.allTheseYearGrades = [[{courseName: '空'}]]
       state.studyState = {}
     }
   }
