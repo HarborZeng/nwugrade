@@ -98,17 +98,17 @@
               const serverData = response.data.data
               //清空之前留下的数据
               this.allTheseYearGrades = []
-              for (let term in serverData) {
+              for (let term of serverData) {
                 let aTerm = []
-                for (let grade in serverData[term].items) {
+                for (let grade of term.items) {
                   let aGrade = {}
                   aGrade.isActive = true
-                  aGrade.courseName = serverData[term].items[grade].kcmc
-                  aGrade.grade = serverData[term].items[grade].cj
-                  aGrade.courseBelonging = serverData[term].items[grade].kcxz !== undefined ?
-                    serverData[term].items[grade].kcxz.substring(0, serverData[term].items[grade].kcxz.length - 2) :
-                    serverData[term].items[grade].kcxz
-                  aGrade.credit = serverData[term].items[grade].xf
+                  aGrade.courseName = grade.kcmc
+                  aGrade.grade = grade.cj
+                  aGrade.courseBelonging = grade.kcxz !== undefined ?
+                    grade.kcxz.substring(0, grade.kcxz.length - 2) :
+                    grade.kcxz
+                  aGrade.credit = grade.xf
                   if (this.highlight) {
                     if (aGrade.grade < 60) {
                       aGrade._rowVariant = 'danger'
@@ -117,8 +117,8 @@
                     }
                   }
                   aTerm.push(aGrade)
-                  aTerm.year = serverData[term].xn
-                  aTerm.term = serverData[term].xq
+                  aTerm.year = term.xn
+                  aTerm.term = term.xq
                 }
                 this.allTheseYearGrades.push(aTerm)
               }
@@ -127,11 +127,12 @@
             } else {
               bus.$emit("showDialog", response.data.message, "查询你的成绩出错了")
             }
-          }).catch(error => {
-          bus.$emit("showDialog", error.toString(), "查询你的成绩出错了")
-          console.warn(error)
-          bus.$emit("loadingFinished")
-        })
+          })
+          .catch(error => {
+            bus.$emit("showDialog", error.toString(), "查询你的成绩出错了")
+            console.warn(error)
+            bus.$emit("loadingFinished")
+          })
       },
       //翻页
       changePage() {
