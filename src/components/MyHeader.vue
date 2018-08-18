@@ -4,8 +4,8 @@
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
     <b-navbar-brand>
-      <img src="/static/nav-img.png">
-      <router-link class="navbar-brand" to="/">m西北大学网页版</router-link>
+      <img src="/static/nav-img.png" class="nav-img">
+      <router-link class="navbar-brand" to="/">m西北大学</router-link>
     </b-navbar-brand>
 
     <b-collapse is-nav id="nav_collapse">
@@ -79,5 +79,7 @@
 </script>
 
 <style scoped>
-
+  .nav-img {
+    height: 45px;
+  }
 </style>
