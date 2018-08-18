@@ -39,6 +39,21 @@
                     :per-page="50">
       </b-pagination>
     </div>
+    <div class="card harbor-padding">
+      <b-col md="8" class="my-1">
+        <b-form-group label="当我的成绩生发变动时，发邮件通知"
+                      label-for="emailInput"
+                      description="订阅成绩变更通知">
+          <b-form-input id="emailInput"
+                        type="email"
+                        v-model="email"
+                        placeholder="电子邮件地址"
+                        required>
+          </b-form-input>
+        </b-form-group>
+        <b-button variant="primary" type="button" @click="subscribeGradesChanges" class="float-right">订阅</b-button>
+      </b-col>
+    </div>
   </div>
 </template>
 
@@ -79,7 +94,8 @@
         dark: false,
         filter: null,
         highlight: false,
-        showSmallTip: false
+        showSmallTip: false,
+        email: '',
       }
     },
     computed: {
@@ -181,6 +197,10 @@
         } else {
           this.$store.commit('undoHighlightStore')
         }
+      },
+
+      subscribeGradesChanges() {
+        bus.$emit("showDialog", "这项功能正在实验中，敬请期待", "Sorry")
       }
     },
     created() {
