@@ -121,6 +121,9 @@
       small: {
         get: function () {
           return document.documentElement.clientWidth < 470
+        },
+        set: function (newValue) {
+
         }
       }
 
