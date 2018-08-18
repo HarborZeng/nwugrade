@@ -182,6 +182,13 @@
         this.queryGrades()
       })
 
+      bus.$on("f5pressed", () => {
+        if (this.$store.state.nwugrade.token !== '') {
+          //登录过，有token，但是没有查过成绩
+          this.queryGrades()
+        }
+      })
+
       if (this.$store.state.nwugrade.token !== '') {
         //登录过，有token，但是没有查过成绩
         this.queryGrades()
@@ -195,11 +202,11 @@
         if (this.$store.state.nwugrade.token === '') {
           setTimeout(() => {
             this.showSmallTip = true
-          }, 300)
+          }, 550)
         }
         setTimeout(() => {
           this.showSmallTip = false
-        }, 2000)
+        }, 3000)
       }
 
     },
