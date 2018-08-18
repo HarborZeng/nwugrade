@@ -9,7 +9,10 @@ export default {
       state.msg = msg
     },
     changeMsgTitle(state, title) {
-      state.msg = title
+      state.msgTitle = title
+    },
+    changeCloseMsg(state, closeMsg) {
+      state.closeMsg = closeMsg
     },
   }
 }
