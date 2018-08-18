@@ -46,10 +46,6 @@
     data() {
       return {
         // 初始化app里面的几个变量的值
-        allTheseYearGrades: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ? [
-          [{courseName: "空"}]
-        ] : this.$store.state.nwugrade.allTheseYearGrades,
-
         currentPage: 1,
 
         fields: {
@@ -71,14 +67,6 @@
           }
         },
 
-        grades: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ? [
-          {courseName: "空"}
-        ] : this.$store.state.nwugrade.allTheseYearGrades[0],
-
-        totalRows: this.$store.state.nwugrade.allTheseYearGrades.length === 0 ?
-          1000 :
-          50 * this.$store.state.nwugrade.allTheseYearGrades.length,
-        limit: this.$store.state.nwugrade.allTheseYearGrades.length,
         striped: true,
         bordered: false,
         small: false,
@@ -91,7 +79,9 @@
     methods: {
       queryGrades() {
         bus.$emit("showLoading", "加载中...", true)
-        axios.get(this.$store.state.webserver.nwu_host + '/university-facade/MyUniversity/MyGrades?token=' + this.$store.state.nwugrade.token)
+        axios.get(this.$store.state.webserver.nwu_host +
+          '/university-facade/MyUniversity/MyGrades?token=' +
+          this.$store.state.nwugrade.token)
           .then(response => {
             bus.$emit("loadingFinished")
             if (response.status === 200 && response.data.state === 200) {
@@ -137,8 +127,10 @@
       //翻页
       changePage() {
         this.grades = this.allTheseYearGrades[this.currentPage - 1]
-        if (this.allTheseYearGrades[this.currentPage - 1].hasOwnProperty('year') && this.allTheseYearGrades[this.currentPage - 1].hasOwnProperty('term'))
-          this.yearAndTermNo = this.allTheseYearGrades[this.currentPage - 1].year + '学年 第' + this.allTheseYearGrades[this.currentPage - 1].term + '学期'
+        if (this.allTheseYearGrades[this.currentPage - 1].hasOwnProperty('year') &&
+          this.allTheseYearGrades[this.currentPage - 1].hasOwnProperty('term'))
+          this.yearAndTermNo = this.allTheseYearGrades[this.currentPage - 1].year + '学年 ' +
+            '第' + this.allTheseYearGrades[this.currentPage - 1].term + '学期'
         this.doHighLight()
       },
       //展示成绩
@@ -146,7 +138,8 @@
         this.grades = this.allTheseYearGrades[0]
         this.totalRows = 50 * this.allTheseYearGrades.length
         this.limit = this.allTheseYearGrades.length
-        this.yearAndTermNo = this.allTheseYearGrades[this.currentPage - 1].year + '学年 第' + this.allTheseYearGrades[this.currentPage - 1].term + '学期'
+        this.yearAndTermNo = this.allTheseYearGrades[this.currentPage - 1].year + '学年 ' +
+          '第' + this.allTheseYearGrades[this.currentPage - 1].term + '学期'
       },
       doHighLight() {
         if (this.highlight) {
@@ -182,7 +175,8 @@
         this.yearAndTermNo = ''
       })
 
-      if (this.$store.state.nwugrade.token !== '' && this.$store.state.nwugrade.allTheseYearGrades.length === 0) {
+      if (this.$store.state.nwugrade.token !== '' &&
+        this.$store.state.nwugrade.allTheseYearGrades.length === 0) {
         //登录过，有token，但是没有查过成绩
         this.queryGrades()
       }
