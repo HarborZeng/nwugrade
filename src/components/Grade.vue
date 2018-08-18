@@ -69,7 +69,6 @@
 
         striped: true,
         bordered: false,
-        small: false,
         dark: false,
         filter: null,
         highlight: false
@@ -118,6 +117,11 @@
         set: function (newValue) {
 
         }
+      },
+      small: {
+        get: function () {
+          return document.documentElement.clientWidth < 470
+        }
       }
 
     },
@@ -144,13 +148,6 @@
                     grade.kcxz.substring(0, grade.kcxz.length - 2) :
                     grade.kcxz
                   aGrade.credit = grade.xf
-                  if (this.highlight) {
-                    if (aGrade.grade < 60) {
-                      aGrade._rowVariant = 'danger'
-                    } else if (aGrade.grade >= 85) {
-                      aGrade._rowVariant = 'success'
-                    }
-                  }
                   aTerm.push(aGrade)
                   aTerm.year = term.xn
                   aTerm.term = term.xq
