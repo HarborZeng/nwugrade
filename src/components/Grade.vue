@@ -10,10 +10,10 @@
                    target="checkbox-small"
                    triggers="null"
                    placement="top">
-          <strong>您的屏幕尺寸较小，已为您自动勾选紧凑</strong>
+          <strong>屏幕较小，已为您勾选紧凑</strong>
         </b-tooltip>
         <b-form-checkbox v-model="dark">夜间</b-form-checkbox>
-        <b-form-checkbox v-model="highlight">高亮优秀和不及格的成绩</b-form-checkbox>
+        <b-form-checkbox v-model="highlight">高亮优秀和不及格</b-form-checkbox>
         <b-form-group horizontal label="过滤" class="mb-0">
           <b-input-group>
             <b-form-input v-model="filter" placeholder="输入任意内容"/>
