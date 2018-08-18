@@ -9,20 +9,23 @@
 <script>
   import 'bootstrap/dist/css/bootstrap.css'
   import 'bootstrap-vue/dist/bootstrap-vue.css'
-  import axios from 'axios'
   import bus from '../bus/bus'
 
   export default {
     name: 'StudyState',
     data() {
       return {
-        studyState: Object.keys(this.$store.state.nwugrade.studyState).length === 0 ? {"k":"msg", "v":"暂无"} : this.$store.state.nwugrade.studyState,
+        studyState: Object.keys(this.$store.state.nwugrade.studyState).length === 0 ?
+          {"k":"msg", "v":"暂无"} :
+          this.$store.state.nwugrade.studyState,
       }
     },
     methods: {
       queryStudyState() {
         bus.$emit("showLoading", "加载中...", true)
-        fetch(this.$store.state.webserver.nwu_host + '/university-facade/MyUniversity/StudyState?token=' + this.$store.state.nwugrade.token)
+        fetch(this.$store.state.webserver.nwu_host +
+          '/university-facade/MyUniversity/StudyState?token=' +
+          this.$store.state.nwugrade.token)
           .then(response => response.json())
           .then(json => {
             // 与服务器通信成功
@@ -52,7 +55,8 @@
         this.studyState = ''
       })
 
-      if (this.$store.state.nwugrade.token !== '' && Object.keys(this.$store.state.nwugrade.studyState).length === 0) {
+      if (this.$store.state.nwugrade.token !== '' &&
+        Object.keys(this.$store.state.nwugrade.studyState).length === 0) {
         //登录过，有token，但是没有查过学习状态
         this.queryStudyState()
       }
