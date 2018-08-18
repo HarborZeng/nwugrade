@@ -153,6 +153,13 @@
                   aTerm.push(aGrade)
                   aTerm.year = term.xn
                   aTerm.term = term.xq
+                  if (this.highlight) {
+                    if (aGrade.grade < 60) {
+                      aGrade._rowVariant = 'danger'
+                    } else if (aGrade.grade >= 85) {
+                      aGrade._rowVariant = 'success'
+                    }
+                  }
                 }
                 allGrades.push(aTerm)
               }
