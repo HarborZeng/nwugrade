@@ -23,7 +23,7 @@
           </b-input-group>
         </b-form-group>
       </b-col>
-      <h5 v-html="yearAndTermNo"></h5>
+      <h5 v-html="yearAndTermNo" class="more-space-top"></h5>
       <b-table :class="small ? 'small-font' : ''"
 
                hover
@@ -39,7 +39,7 @@
                     :per-page="50">
       </b-pagination>
     </div>
-    <div class="card harbor-padding">
+    <div class="card harbor-padding more-space-top">
       <b-col md="8" class="my-1">
         <b-form-group label="当我的成绩生发变动时，发邮件通知"
                       label-for="emailInput"
