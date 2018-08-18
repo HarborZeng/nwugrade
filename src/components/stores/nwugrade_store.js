@@ -43,6 +43,7 @@ export default {
       })
     },
     resetAllNwuData(state) {
+      localStorage.clear()
       state.token = ''
       state.usrData = {name: '未登录', xh: '未登录'}
       state.allTheseYearGrades = [[{courseName: '空'}]]
