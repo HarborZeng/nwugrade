@@ -79,6 +79,11 @@
 </script>
 
 <style scoped>
+  @media screen and (max-width: 479px) {
+    .nav-img {
+      display: none;
+    }
+  }
   .nav-img {
     height: 45px;
   }
