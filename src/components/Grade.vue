@@ -220,10 +220,11 @@
         let interval = setInterval(() => {
           deg += 4;
           document.getElementById('refreshImage').style.transform = "rotate(" + deg + "deg)";
-          if (deg > 360) {
-            clearInterval(interval)
-          }
         }, 2);
+        bus.$on('loadingFinished', () => {
+          clearInterval(interval)
+          document.getElementById('refreshImage').style.transform = "rotate(0deg)";
+        })
         this.queryGrades()
       }
     },
