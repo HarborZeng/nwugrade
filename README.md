@@ -2,7 +2,7 @@
 
 > 西北大学第三方成绩查询系统前端
 
-查看在线版本[grades.tellyouwhat.cn](grades.tellyouwhat.cn)
+查看在线版本[grades.tellyouwhat.cn](http://grades.tellyouwhat.cn)
 
 ## Build Setup
 
@@ -40,4 +40,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 - 我们需要关注的是src、static目录，index.html和package.json
 
-  [src/App.vue](https://github.com/HarborZeng/grade.tellyouwhat.cn/src/App.vue)和[src/main.js](https://github.com/HarborZeng/grade.tellyouwhat.cn/src/App.vue)是看源码的入口，请看他俩的注释
+  [src/App.vue](https://github.com/HarborZeng/grade.tellyouwhat.cn/blob/master/src/App.vue)和[src/main.js](https://github.com/HarborZeng/grade.tellyouwhat.cn/blob/master/src/main.js)是看源码的入口，请看他俩的注释
