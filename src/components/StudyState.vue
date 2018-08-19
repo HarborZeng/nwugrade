@@ -26,7 +26,7 @@
     methods: {
       queryStudyState() {
         bus.$emit("showLoading", "加载中...", true)
-        fetch(this.$store.state.webserver.nwu_host +
+        fetch(this.$store.state.webserver.tellyouwhat_host +
           '/university-facade/MyUniversity/StudyState?token=' +
           this.$store.state.nwugrade.token)
           .then(response => response.json())

@@ -203,7 +203,7 @@
       queryGrades() {
         bus.$emit("showLoading", "加载中...", true)
         // 异步网络请求
-        axios.get(this.$store.state.webserver.nwu_host +
+        axios.get(this.$store.state.webserver.tellyouwhat_host +
           '/university-facade/MyUniversity/MyGrades?token=' +
           this.$store.state.nwugrade.token)
           .then(response => {
