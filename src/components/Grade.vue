@@ -95,17 +95,51 @@
           }
         },
 
+        /**
+         * 紧凑
+         */
         small: false,
+
+        /**
+         * 条纹
+         */
         striped: true,
+
+        /**
+         * 表格边框
+         */
         bordered: false,
+
+        /**
+         * 夜间模式
+         */
         dark: false,
+
+        /**
+         * 过滤器
+         */
         filter: null,
+
+        /**
+         * 高亮优秀和不及格的成绩
+         */
         highlight: false,
+
+        /**
+         * 显示自动开启紧凑的气泡
+         */
         showSmallTip: false,
+
+        /**
+         * 电子邮件地址
+         */
         email: '',
       }
     },
     computed: {
+      /**
+       * 这些年来的成绩
+       */
       allTheseYearGrades: {
         get: function () {
           return this.$store.state.nwugrade.allTheseYearGrades
@@ -114,6 +148,9 @@
 
         }
       },
+      /**
+       * 显示在当前table里面的成绩
+       */
       grades: {
         get: function () {
           return this.$store.state.nwugrade.allTheseYearGrades[this.currentPage - 1]
@@ -122,6 +159,9 @@
 
         }
       },
+      /**
+       * 总行数
+       */
       totalRows: {
         get: function () {
           return this.$store.state.nwugrade.allTheseYearGrades.length === 0 ?
@@ -132,6 +172,9 @@
 
         }
       },
+      /**
+       * 总页数
+       */
       limit: {
         get: function () {
           return this.$store.state.nwugrade.allTheseYearGrades.length
@@ -140,6 +183,9 @@
 
         }
       },
+      /**
+       * 学年和学期的标语
+       */
       yearAndTermNo: {
         get: function () {
           return this.grades !== undefined && this.grades.hasOwnProperty('year') && this.grades.hasOwnProperty('term') ?
@@ -151,8 +197,12 @@
       }
     },
     methods: {
+      /**
+       * 查询成绩
+       */
       queryGrades() {
         bus.$emit("showLoading", "加载中...", true)
+        // 异步网络请求
         axios.get(this.$store.state.webserver.nwu_host +
           '/university-facade/MyUniversity/MyGrades?token=' +
           this.$store.state.nwugrade.token)
@@ -160,6 +210,7 @@
             bus.$emit("loadingFinished")
             if (response.status === 200 && response.data.state === 200) {
               const serverData = response.data.data
+              // 把返回的成绩数据重整成更加易读的类型
               let allGrades = []
               for (let term of serverData) {
                 let aTerm = []
@@ -185,8 +236,10 @@
                 }
                 allGrades.push(aTerm)
               }
+              // 存储这些年来的所有成绩
               this.$store.commit("saveAllTheseYearGrades", allGrades)
             } else {
+              // token失效，清空数据，重新登录
               if (response.data.state === 2003) {
                 this.$store.commit("resetAllNwuData")
               }
@@ -194,12 +247,16 @@
             }
           })
           .catch(error => {
+            // 查询出错
             bus.$emit("showDialog", error.toString(), "查询你的成绩出错了")
             console.warn(error)
             bus.$emit("loadingFinished")
           })
       },
 
+      /**
+       * 操作使成绩高亮那些优秀的和不及格的
+       */
       performHighLight() {
         if (this.highlight) {
           this.$store.commit("doHighlightStore")
@@ -208,23 +265,37 @@
         }
       },
 
+      /**
+       * 订阅成绩变化的邮件通知
+       */
       subscribeGradesChanges() {
         bus.$emit("showDialog", "这项功能正在实验中，敬请期待", "Sorry")
       },
 
+      /**
+       * 点击刷新的图片，出发这个事件，刷新成绩
+       */
       refreshGrades() {
+        // 没有登录就不要继续了
         if (this.$store.state.nwugrade.token === '') {
           return
         }
+
+        // 每2ms角度加4°的动画
         let deg = 0;
         let interval = setInterval(() => {
           deg += 4;
           document.getElementById('refreshImage').style.transform = "rotate(" + deg + "deg)";
         }, 2);
+
+        // 注册监听查成绩加载完毕之后的事件
         bus.$on('loadingFinished', () => {
+          // 查询成绩完了后停下动画
           clearInterval(interval)
+          // 刷新按钮回归原位
           document.getElementById('refreshImage').style.transform = "rotate(0deg)";
         })
+        // 开始查成绩
         this.queryGrades()
       }
     },
@@ -246,16 +317,19 @@
         this.queryGrades()
       }
 
+      // 在加载页面的时候就重新绘制一下高亮
       this.performHighLight()
 
-      //加载页面的时候，提示屏幕大小
+      //加载页面的时候，根据屏幕大小选择提示气泡出现与否
       if (document.documentElement.clientWidth < 470) {
         this.small = true
+        // 延迟550ms再显示气泡，以防页面还有其他动画，导致气泡位置不对
         if (this.$store.state.nwugrade.token === '') {
           setTimeout(() => {
             this.showSmallTip = true
           }, 550)
         }
+        //气泡3000ms后自动消失
         setTimeout(() => {
           this.showSmallTip = false
         }, 3000)
@@ -263,6 +337,9 @@
 
     },
     watch: {
+      /**
+       * 监听当highlight变了之后，立即执行performHighLight()
+       */
       highlight: function () {
         this.performHighLight()
       }
@@ -272,6 +349,7 @@
 </script>
 
 <style scoped>
+  /*作用域有限，限定在本组件的css*/
   h1, h2 {
     font-weight: normal;
   }

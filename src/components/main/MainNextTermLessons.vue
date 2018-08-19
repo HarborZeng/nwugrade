@@ -3,6 +3,7 @@
 </template>
 
 <script>
+  // 下学期课组件
   export default {
     name: "MainNextTermLessons"
   }

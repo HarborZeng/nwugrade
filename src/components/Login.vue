@@ -57,7 +57,7 @@
       }
     },
     methods: {
-// 点击事件会调用此方法
+      // 点击事件会调用此方法
       login() {
         // 判断学号长度
         if (this.studentNumber.length !== 9 && this.studentNumber.length !== 10) {
@@ -103,6 +103,7 @@
           if (response.status !== 200 || response.data.state !== 200) {
             bus.$emit("showDialog", response.data.message, "服务端异常 emmmm...")
           } else {
+            // 登录成功，更新数据
             this.$store.commit("changeToken", response.data.data.token)
             this.$store.commit("saveUserData", response.data.data)
             bus.$emit("loginFinished")

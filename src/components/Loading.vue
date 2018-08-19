@@ -17,12 +17,24 @@
     },
     data() {
       return {
+        /**
+         * 展示加载框与否
+         */
         showLoading: false,
+        /**
+         * 加载时展示的文案
+         */
         loadingLabel: 'loading',
+        /**
+         * 加载的时候会有白色覆盖页面与否
+         */
         overlay: true
       }
     },
     created() {
+      /**
+       * 在初始化这个组件的时候，就注册2个事件
+       */
       bus.$on("showLoading", (loadingMessage, overlay) => {
         this.loadingLabel = loadingMessage
         this.showLoading = true

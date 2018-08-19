@@ -3,6 +3,7 @@
 </template>
 
 <script>
+  // 我的课程主组件
   export default {
     name: "MainMyLessons"
   }

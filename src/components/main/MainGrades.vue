@@ -14,6 +14,7 @@
   import 'bootstrap-vue/dist/bootstrap-vue.css'
   import Grade from "../Grade";
 
+  // 成绩主组件，包含3个子组件
   export default {
     name: 'MainGrades',
     components: {Grade, Login, AlertMsg}

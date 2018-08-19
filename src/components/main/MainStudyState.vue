@@ -13,7 +13,7 @@
 
   import 'bootstrap/dist/css/bootstrap.css'
   import 'bootstrap-vue/dist/bootstrap-vue.css'
-
+  // 学习状态组件，包含三个子组件
   export default {
     name: 'MainStudyState',
     components: {StudyState, Login, AlertMsg},

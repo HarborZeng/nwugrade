@@ -9,6 +9,10 @@ import Error from '@/components/error'
 Vue.use(Router)
 
 export default new Router({
+  /**
+   * history模式去除了/#这个难看的东西，
+   * 但是需要服务器进一步配置try files index.html等
+   */
   mode: 'history',
   routes: [
     {

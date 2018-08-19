@@ -50,6 +50,9 @@
       }
     },
     computed: {
+      /**
+       * 学生姓名，根据veux里面存的实时变化
+       */
       studentName: {
         get: function () {
           return this.$store.state.nwugrade.usrData.name
@@ -58,6 +61,9 @@
 
         }
       },
+      /**
+       * 学号，根据veux里面存的实时变化
+       */
       studentNumber: {
         get: function () {
           return this.$store.state.nwugrade.usrData.xh
@@ -68,9 +74,16 @@
       }
     },
     methods: {
+      /**
+       * url后面的相对路径变化了，更新relativeAddress值，
+       * css会有相应变化，相应标签会被加上active样式
+       */
       changeUrlActiveState() {
         this.relativeAddress = window.location.pathname
       },
+      /**
+       * 退出登录的注销事件，重置所有NwuDAta
+       */
       exit() {
         this.$store.commit("resetAllNwuData")
       }
@@ -79,7 +92,10 @@
 </script>
 
 <style scoped>
+  /*作用域有限，限定在本组件的css*/
+
   @media screen and (max-width: 479px) {
+    /*屏幕小于479px的不显示logo图*/
     .nav-img {
       display: none;
     }

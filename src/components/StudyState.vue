@@ -33,8 +33,10 @@
           .then(json => {
             // 与服务器通信成功
             if (json.state === 200) {
+              // 获取成功
               this.$store.commit("saveStudyState", json.data)
             } else {
+              // token失效，提示重新登录
               if (json.state === 2003) {
                 this.$store.commit("resetAllNwuData")
               }
