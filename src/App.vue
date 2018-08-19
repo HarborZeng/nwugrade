@@ -1,10 +1,10 @@
 <template>
   <div id="app">
+    <Modal></Modal>
+    <Loading></Loading>
     <MyHeader></MyHeader>
     <router-view/>
     <Footer></Footer>
-    <Modal></Modal>
-    <Loading></Loading>
   </div>
 </template>
 
