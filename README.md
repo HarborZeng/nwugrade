@@ -36,7 +36,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 - 外层大多数文件都是vue-cli自动生成的
 
-![sss](https://github.com/HarborZeng/grade.tellyouwhat.cn/readmeImage/代码结构介绍.png)
+![sss](https://github.com/HarborZeng/grade.tellyouwhat.cn/blob/master/readmeImage/%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84%E4%BB%8B%E7%BB%8D.png)
 
 - 我们需要关注的是src、static目录，index.html和package.json
 
