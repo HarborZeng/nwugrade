@@ -22,4 +22,4 @@ npm run build --report
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-这个项目使用到了vue系列脚手架工具，包括vue-cli, vue-router, bootstrap-vue等，实现一个成绩查询的客户端。更多说明详见代码注释。
+这个项目使用到了vue系列脚手架工具，包括vue-cli, vue-router, vuex, bootstrap-vue等，实现一个成绩查询的客户端。更多说明详见代码注释。
