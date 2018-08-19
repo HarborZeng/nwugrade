@@ -37,10 +37,12 @@
                     :total-rows="totalRows" v-model="currentPage"
                     :per-page="50">
       </b-pagination>
-      <img src="/static/refresh.png"
-           class="refresh-btn float-right"
-           id="refreshImage"
-           @click="refreshGrades"/>
+      <div>
+        <img src="/static/refresh.png"
+             class="refresh-btn float-right"
+             id="refreshImage"
+             @click="refreshGrades"/>
+      </div>
     </div>
     <div class="card harbor-padding more-space-top">
       <b-col md="8" class="my-1">
@@ -217,7 +219,7 @@
         }
         let deg = 0;
         let interval = setInterval(() => {
-          deg += 3;
+          deg += 4;
           document.getElementById('refreshImage').style.transform = "rotate(" + deg + "deg)";
           if (deg > 360) {
             clearInterval(interval)
@@ -303,7 +305,7 @@
   }
 
   .refresh-btn {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
   }
 </style>
