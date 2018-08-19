@@ -11,7 +11,7 @@ export default {
      * 通过搭建透明代理，绕过安全保护
      * 次域名仅作登录使用
      */
-    tellyouwhat_host:'http://gradeapi.tellyouwhat.cn',
+    tellyouwhat_host:'https://gradeapi.tellyouwhat.cn',
   },
   mutations: {
 
