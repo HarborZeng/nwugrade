@@ -160,7 +160,6 @@
             bus.$emit("loadingFinished")
             if (response.status === 200 && response.data.state === 200) {
               const serverData = response.data.data
-              //清空之前留下的数据
               let allGrades = []
               for (let term of serverData) {
                 let aTerm = []

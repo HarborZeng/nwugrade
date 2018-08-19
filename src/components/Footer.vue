@@ -5,9 +5,8 @@
       <a href="https://tellyouwhat.cn/">tellyouwhat.cn</a>
     </span> <br/>
     <span>
-      项目源代码：
       <a href="https://github.com/HarborZeng/grade.tellyouwhat.cn" target="_blank">
-        https://github.com/HarborZeng/grade.tellyouwhat.cn
+        项目源代码
       </a>
     </span> <br/>
     <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
@@ -43,5 +42,9 @@
 
   .copyright a {
     color: #555555;
+  }
+
+  .footer {
+    max-width: 100%;
   }
 </style>
