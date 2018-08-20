@@ -189,7 +189,7 @@
       yearAndTermNo: {
         get: function () {
           return this.grades !== undefined && this.grades.hasOwnProperty('year') && this.grades.hasOwnProperty('term') ?
-            '${this.grades.year}学年 第${this.grades.term}学期' : ''
+            this.grades.year + '学年 ' + '第' + this.grades.term + '学期' : ''
         },
         set: function (newValue) {
 
