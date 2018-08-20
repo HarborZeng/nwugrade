@@ -1,11 +1,10 @@
 <template>
   <div class="footer copyright">
-    <span>
-      Copyright &copy; HarborZeng
-      <a href="https://tellyouwhat.cn/">tellyouwhat.cn</a>
+    <span @click="showMoreInfo" v-html="copyrightMessage">
+
     </span> <br/>
     <span>
-      <a href="https://github.com/HarborZeng/grade.tellyouwhat.cn" target="_blank">
+      <a href="https://github.com/HarborZeng/grade.tellyouwhat.cn" target="_blank" class="a-show-underline">
         项目源代码
       </a>
     </span> <br/>
@@ -17,7 +16,26 @@
   import '../assets/busuanzi.pure.mini'
 
   export default {
-    name: 'Footer'
+    name: 'Footer',
+    data() {
+      return {
+        copyrightMessage: "Copyright &copy; HarborZeng\n" +
+        "      <a href=\"https://tellyouwhat.cn/\">tellyouwhat.cn</a>",
+        counter: 0,
+      }
+    },
+    methods: {
+      showMoreInfo() {
+        if (this.counter % 2 === 0) {
+          this.copyrightMessage = "Copyright &copy; HarborZeng\n" +
+            "      <a href=\"https://tellyouwhat.cn/\">tellyouwhat.cn</a>" + "<br/>这个webapp是纯前端项目，存储成绩和信息用localStorage，gradeapi是透明代理，点击退出、清除浏览器缓存和隐身模式均可保护自己的信息安全"
+        } else {
+          this.copyrightMessage = "Copyright &copy; HarborZeng\n" +
+            "      <a href=\"https://tellyouwhat.cn/\">tellyouwhat.cn</a>"
+        }
+        this.counter++
+      }
+    }
   }
 </script>
 
@@ -46,5 +64,9 @@
 
   .footer {
     max-width: 100%;
+  }
+
+  .a-show-underline {
+    text-decoration: underline;
   }
 </style>
