@@ -32,7 +32,7 @@
                      v-model="agreementsChecked"
                      required>
       同意软件使用条款
-      <a href="agreement.html" target="_blank">免责条款</a>
+      <a href="/static/agreement.html" target="_blank">免责条款</a>
     </b-form-checkbox>
     <b-button type="button"
               v-b-popover.hover.right="'你的密码我不会存储'"
