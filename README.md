@@ -3,6 +3,7 @@
 > 西北大学第三方成绩查询系统前端
 
 查看在线版本[grades.tellyouwhat.cn](http://grades.tellyouwhat.cn)
+![预览图](https://github.com/HarborZeng/grade.tellyouwhat.cn/blob/master/readmeImage/screenshot.png)
 
 ## Build Setup
 
