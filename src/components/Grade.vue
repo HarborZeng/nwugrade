@@ -58,7 +58,8 @@
         </b-form-group>
         <b-button variant="outline-success" type="button"
                   @click="subscribeGradesChanges"
-                  class="float-right">订阅</b-button>
+                  class="float-right">订阅
+        </b-button>
       </b-col>
     </div>
   </div>
@@ -238,6 +239,7 @@
               }
               // 存储这些年来的所有成绩
               this.$store.commit("saveAllTheseYearGrades", allGrades)
+              this.showGradesNotification()
             } else {
               // token失效，清空数据，重新登录
               if (response.data.state === 2003) {
@@ -252,6 +254,30 @@
             console.warn(error)
             bus.$emit("loadingFinished")
           })
+      },
+
+      showGradesNotification() {
+        if (window.Notification && Notification.permission !== "denied") {
+          Notification.requestPermission((status) => {    // 请求权限
+            if (status === 'granted') {
+              // 弹出一个通知
+              Array.prototype.toLocaleString = () => {
+                let ret = ''
+                for (let i = this.allTheseYearGrades.length; i > 0; i--) {
+                  for (let grade of this.allTheseYearGrades[i - 1]) {
+                    ret += grade.courseName + ': ' + grade.grade + ', ' + grade.credit + '\n'
+                  }
+                  ret += '--------------------------------------\n'
+                }
+                return ret
+              }
+              new Notification('成绩查出来喽', {
+                body: this.allTheseYearGrades.toLocaleString(),
+                icon: '/static/logo.png'
+              })
+            }
+          });
+        }
       },
 
       /**
