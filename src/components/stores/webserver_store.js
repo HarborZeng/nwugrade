@@ -12,6 +12,7 @@ export default {
      * 次域名仅作登录使用
      */
     tellyouwhat_host:'https://gradeapi.tellyouwhat.cn',
+    tellyouwhat_api_host:'https://api.grade.tellyouwhat.cn',
   },
   mutations: {
 

@@ -44,24 +44,6 @@
              @click="refreshGrades"/>
       </div>
     </div>
-    <div class="card harbor-padding more-space-top">
-      <b-col md="8" class="my-1">
-        <b-form-group label="当我的成绩生发变动时，发邮件通知"
-                      label-for="emailInput"
-                      description="订阅成绩变更通知">
-          <b-form-input id="emailInput"
-                        type="email"
-                        v-model="email"
-                        placeholder="电子邮件地址"
-                        required>
-          </b-form-input>
-        </b-form-group>
-        <b-button variant="outline-success" type="button"
-                  @click="subscribeGradesChanges"
-                  class="float-right">订阅
-        </b-button>
-      </b-col>
-    </div>
   </div>
 </template>
 
@@ -130,11 +112,6 @@
          * 显示自动开启紧凑的气泡
          */
         showSmallTip: false,
-
-        /**
-         * 电子邮件地址
-         */
-        email: '',
       }
     },
     computed: {
@@ -289,13 +266,6 @@
         } else {
           this.$store.commit('undoHighlightStore')
         }
-      },
-
-      /**
-       * 订阅成绩变化的邮件通知
-       */
-      subscribeGradesChanges() {
-        bus.$emit("showDialog", "这项功能正在实验中，敬请期待", "Sorry")
       },
 
       /**

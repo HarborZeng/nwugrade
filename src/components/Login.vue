@@ -1,5 +1,5 @@
 <template>
-  <b-form class="col-md-6 more-space-top">
+  <b-col md="8" class="more-space-top">
 
     <b-form-group
       label="学号："
@@ -35,11 +35,11 @@
       <a href="/static/agreement.html" target="_blank">免责条款</a>
     </b-form-checkbox>
     <b-button type="button"
-              v-b-popover.hover.right="'你的密码我不会存储'"
+              v-b-popover.hover.right="'你的信息不会被盗取'"
               title="放心"
               variant="primary btn-lg"
               @click="login()">登录</b-button>
-  </b-form>
+  </b-col>
 </template>
 
 <script>

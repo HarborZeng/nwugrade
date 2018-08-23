@@ -54,6 +54,11 @@
         this.msg = msg;
         this.msgTitle = title;
         this.showModal()
+      }).$on("showDialogWithCloseMsg", (msg, title, closeMsg) => {
+        this.msg = msg;
+        this.msgTitle = title;
+        this.closeMsg = closeMsg;
+        this.showModal()
       })
     }
   }
