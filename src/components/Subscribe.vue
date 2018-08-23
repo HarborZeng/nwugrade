@@ -172,6 +172,12 @@
     },
     created() {
       this.querySubscribeStatus()
+      bus.$on("refreshRequested", () => {
+        if (this.$store.state.nwugrade.usrData.token === '') {
+          return;
+        }
+        this.querySubscribeStatus()
+      })
     }
   }
 </script>
