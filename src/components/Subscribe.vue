@@ -13,12 +13,13 @@
           </b-form-input>
         </b-form-group>
         <b-button variant="outline-success" type="button"
-                  @click="subscribeGradesChanges"
+                  @click="showSubscribeModal=true"
                   class="float-right">订阅
         </b-button>
       </div>
       <div class="margin-a-little" v-else-if="hasAuthentication && hasSubscribed">
-        <p v-if="hasSubscribed">您已订阅自动查询成绩的邮件，<span v-if="isNotifyOnlyGradesChanged">当成绩有变动时，</span>您的邮箱<b> {{emailAddress}} </b>会收到包含您最新成绩的邮件哦。</p>
+        <p v-if="hasSubscribed">您已订阅自动查询成绩的邮件，<span v-if="isNotifyOnlyGradesChanged">当成绩有变动时，</span>您的邮箱<b>
+          {{emailAddress}} </b>会收到包含您最新成绩的邮件哦。</p>
         <p>您的自动查询策略是 <b>{{triggerStrategy}}</b>
           <b-badge variant="info" href="https://www.jianshu.com/p/f03b1497122a" target="_blank">什么是CRON表达式</b-badge>
         </p>
@@ -29,6 +30,39 @@
         </b-button>
       </div>
     </b-col>
+    <b-modal v-model="showSubscribeModal"
+             title="自定义查询策略"
+             centered
+             :header-bg-variant="dark">
+      <b-container fluid>
+        <b-row class="mb-1 text-center">
+          <b-col cols="1"></b-col>
+          <b-col>重复间隔</b-col>
+          <b-col>时间单位</b-col>
+          <b-col cols="3"></b-col>
+        </b-row>
+        <b-row class="mb-1">
+          <b-col cols="1">每</b-col>
+          <b-col>
+            <b-form-input type="number" v-model="n"/>
+          </b-col>
+          <b-col>
+            <b-form-select :options="timeUnitSet" v-model="timeUnit"/>
+          </b-col>
+          <b-col cols="3">
+            查询一次
+          </b-col>
+        </b-row>
+        <b-row class="mb-1">
+          <b-form-checkbox class="margin-a-little" v-model="notifyOnlyOnChanged">仅当成绩发生变化时发邮件</b-form-checkbox>
+        </b-row>
+      </b-container>
+      <div slot="modal-footer" class="w-100">
+        <b-btn size="sm" class="float-right" variant="success" @click="subscribeGradesChanges">
+          提交
+        </b-btn>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -48,7 +82,12 @@
         isNotifyOnlyGradesChanged: false,
         emailAddress: '暂无',
         nextFireTime: '暂无',
-        triggerStrategy: '暂无'
+        triggerStrategy: '暂无',
+        showSubscribeModal: false,
+        timeUnit: 'day',
+        timeUnitSet: {'second': '秒', 'minute': '分', 'hour': '时', 'day': '日'},
+        notifyOnlyOnChanged: true,
+        n: 2
       }
     },
     computed: {
@@ -72,12 +111,12 @@
           token: this.$store.state.nwugrade.usrData.token,
           email: this.email,
           queryStrategy: {
-            timeUnit: "minute",
-            n: 1,
+            timeUnit: this.timeUnit,
+            n: this.n,
             queryTime: -1
           },
           notifyStrategy: {
-            notifyOnlyGradesChanged: false
+            notifyOnlyGradesChanged: this.notifyOnlyOnChanged
           }
         })
           .then(response => {
