@@ -105,6 +105,7 @@
        * 订阅成绩变化的邮件通知
        */
       subscribeGradesChanges() {
+        bus.$emit("showLoading", "订阅中", true)
         axios.post(this.$store.state.webserver.tellyouwhat_api_host +
           '/task', {
           studentNumber: this.$store.state.nwugrade.usrData.xh,
@@ -124,6 +125,7 @@
             bus.$emit("showDialog", "订阅成功，您将会收到邮件通知", "恭喜你")
             this.querySubscribeStatus()
             this.hasSubscribed = true
+            bus.$emit("loadingFinished")
           })
           .catch(e => {
             if (e.response.status === 400) {
@@ -137,8 +139,8 @@
               console.warn(e.response.data)
               bus.$emit("showDialog", e.response.data.message, "订阅失败")
             }
+            bus.$emit("loadingFinished")
           })
-        // bus.$emit("showDialog", "这项功能正在实验中，敬请期待", "Sorry")
       },
       cancelSubscribe() {
         bus.$emit("showLoading", "取消中", true)
