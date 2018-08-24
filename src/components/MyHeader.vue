@@ -5,7 +5,7 @@
 
     <b-navbar-brand>
       <img src="/static/nav-img.png" class="nav-img">
-      <router-link class="navbar-brand" to="/">m西北大学</router-link>
+      <router-link class="navbar-brand" to="/">告你成绩</router-link>
     </b-navbar-brand>
 
     <b-collapse is-nav id="nav_collapse">
