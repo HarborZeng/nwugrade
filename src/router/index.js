@@ -4,7 +4,7 @@ import StudyStateSPA from '@/components/main/MainStudyState'
 import GradesSPA from '@/components/main/MainGrades'
 import NextTermLessonsSPA from '@/components/main/MainNextTermLessons'
 import MyLessonsSPA from '@/components/main/MainMyLessons'
-import Error from '@/components/error'
+import Error from '@/components/Error'
 
 Vue.use(Router)
 

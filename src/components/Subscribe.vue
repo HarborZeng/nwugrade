@@ -172,7 +172,7 @@
     },
     created() {
       this.querySubscribeStatus()
-      bus.$on("refreshRequested", () => {
+      bus.$on(["refreshRequested", "loginFinished"], () => {
         if (this.$store.state.nwugrade.usrData.token === '') {
           return;
         }
