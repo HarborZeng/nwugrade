@@ -141,13 +141,16 @@
         // bus.$emit("showDialog", "这项功能正在实验中，敬请期待", "Sorry")
       },
       cancelSubscribe() {
+        bus.$emit("showLoading", "取消中", false)
         axios.delete(this.$store.state.webserver.tellyouwhat_api_host +
           '/task/' + this.$store.state.nwugrade.usrData.xh)
           .then(response => {
             this.hasSubscribed = false
+            bus.$emit("loadingFinished")
             bus.$emit("showDialogWithCloseMsg", "您已取消成功", "操作成功", "OK")
           })
           .catch(e => {
+            bus.$emit("loadingFinished")
             bus.$emit("showDialogWithCloseMsg", "取消失败", "sorry", "OK")
           })
       },
