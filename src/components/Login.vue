@@ -40,6 +40,7 @@
               @click="login">登录</b-button>
     <b-popover target="loginBtn"
             title="放心"
+            show.sync="showPop"
             triggers="hover focus"
             content="你信息不会被我知道">
     </b-popover>
@@ -58,11 +59,16 @@
         studentNumber: '',
         password: '',
         agreementsChecked: false,
+        showPop: false,
       }
     },
     methods: {
       // 点击事件会调用此方法
       login() {
+      this.showPop = true
+      setTimeout(() => {
+        this.showPop = false
+      }, 2000)
         // 判断学号长度
         if (this.studentNumber.length !== 9 && this.studentNumber.length !== 10) {
           if (this.studentNumber.length === 0) {
