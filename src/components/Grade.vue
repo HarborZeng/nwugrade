@@ -35,7 +35,7 @@
                :filter="filter"></b-table>
       <b-pagination align="center" size="md" :limit="limit"
                     :total-rows="totalRows" v-model="currentPage"
-                    :per-page="50">
+                    :per-page="50" prev-text="上学期" next-text="下学期">
       </b-pagination>
       <div>
         <img src="/static/refresh.png"
