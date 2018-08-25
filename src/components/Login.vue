@@ -35,10 +35,14 @@
       <a href="/static/agreement.html" target="_blank">免责条款</a>
     </b-form-checkbox>
     <b-button type="button"
-              v-b-popover.hover.right="'你的信息不会被盗取'"
-              title="放心"
+              id="loginBtn"
               variant="primary btn-lg"
-              @click="login()">登录</b-button>
+              @click="login">登录</b-button>
+    <b-popover target="loginBtn"
+            title="放心"
+            triggers="hover focus"
+            content="你信息不会被我知道">
+    </b-popover>
   </b-col>
 </template>
 
