@@ -41,7 +41,6 @@
     <b-popover target="loginBtn"
             title="放心"
             show.sync="showPop"
-            triggers="hover focus"
             content="你信息不会被我知道">
     </b-popover>
   </b-col>
