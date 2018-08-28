@@ -34,10 +34,10 @@
       同意软件使用条款
       <a href="/static/agreement.html" target="_blank">免责条款</a>
     </b-form-checkbox>
-    <b-button type="button"
+    <AtButton type="button"
               id="loginBtn"
               variant="primary btn-lg"
-              @click="login">登录</b-button>
+              @click="login">登录</AtButton>
     <b-popover target="loginBtn"
             title="放心"
             show.sync="showPop"
@@ -50,6 +50,7 @@
   import bus from '../bus/bus'
   import axios from 'axios'
   import '../assets/md5.min'
+  import { AtButton } from 'taro-ui'
 
   export default {
     name: 'Login',
