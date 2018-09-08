@@ -227,7 +227,11 @@
           })
           .catch(error => {
             // 查询出错
-            bus.$emit("showDialog", error.toString(), "查询你的成绩出错了")
+            if (error.message === "Network Error") {
+              bus.$emit("showDialog", "学校的服务器又挂了", "请稍候重试...")
+            } else {
+              bus.$emit("showDialog", error.toString(), "查询你的成绩出错了")
+            }
             console.warn(error)
             bus.$emit("loadingFinished")
           })

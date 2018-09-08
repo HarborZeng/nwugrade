@@ -118,7 +118,11 @@
             bus.$emit("loginFinished")
           }
         }).catch(error => {
-          bus.$emit("showDialog", error.message, "客户端异常 emmmm...")
+          if (error.message === "Network Error") {
+            bus.$emit("showDialog", "学校的服务器又挂了", "请稍候重试...")
+          } else {
+            bus.$emit("showDialog", error.message, "客户端异常 emmmm...")
+          }
           bus.$emit("loadingFinished")
         })
       },
