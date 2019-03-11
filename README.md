@@ -1,3 +1,5 @@
+Note that, this project is decrepitated and no longer maintained if you wanna make a change please fork this repo and make it your own.
+
 # grade.tellyouwhat.cn
 
 > 西北大学第三方成绩查询系统前端
